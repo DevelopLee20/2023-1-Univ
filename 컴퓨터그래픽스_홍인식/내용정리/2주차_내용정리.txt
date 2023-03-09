@@ -1,0 +1,14 @@
+Q. CPT
+- 그래픽의 시초
+- 음극선관
+A.
+
+Q. CRT란?
+i) Raster Scan
+ii) Random Scan
+
+Q. DDR이란?
+A.
+
+Q. 모든 픽셀에 대한 정보가 메모리에 모두 덤프되는가?
+A. 

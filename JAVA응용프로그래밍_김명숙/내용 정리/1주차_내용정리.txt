@@ -1,0 +1,4 @@
+1. java server page -> JSP
+2. HTML + CSS
+3. DB Server
+4. Java 프레임워크 -> spring

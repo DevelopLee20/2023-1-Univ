@@ -13,7 +13,7 @@ class MyFrame extends JFrame{
     int rect_count = 40;
     int start_x = 20;
     int start_y = 20;
-    int global_size = rect_size * rect_count + start_y;
+    int global_size = rect_size * rect_count; // 모눈종이 y좌표 아래로 밀어야함
     Graphics g;
 
     public MyFrame(){
@@ -24,6 +24,7 @@ class MyFrame extends JFrame{
         this.setVisible(true);
     }
 
+    // getGraphics() 로 수정 필요
     @Override
     public void paint(Graphics g){
         this.g = g;
@@ -35,7 +36,7 @@ class MyFrame extends JFrame{
         return global_size - y;
     }
 
-    // 모눈 종이 생성
+    // 모눈 종이 생성 : 실제 모눈 종이처럼 수정 필요(0,0의 격자 굵기는 조금 굵게)
     public void paint_dot(Graphics g){
         int paint_x = this.start_x;
         int paint_y = this.start_y;

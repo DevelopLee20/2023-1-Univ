@@ -1,0 +1,2 @@
+Digital : HIGH, LOW, 0과 1로 구분함
+Analog : 0~255 사이의 값을 가진다.
