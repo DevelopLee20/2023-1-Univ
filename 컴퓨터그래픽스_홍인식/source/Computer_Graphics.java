@@ -1,92 +1,69 @@
-package source;
 import java.awt.*;
 import javax.swing.*;
 
-public class Computer_Graphics {
+public class Computer_Graphics{
     public static void main(String args[]){
-        DotFrame test = new DotFrame();
+        new MyFrame();
     }
 }
 
-// 창 생성
-class DotFrame extends JFrame{
-    int gap = 10;
-    int count = 40;
-    int Khan_start_y = 20;
-    int Khan_width = 10;
-    int Khan_height = 10;
-    int global_size = count*gap;
+// 화면 출력기
+class MyFrame extends JFrame{
+    int rect_size = 10;
+    int rect_count = 40;
+    int start_x = 20;
+    int start_y = 20;
+    int global_size = rect_size * rect_count + start_y;
+    Graphics g;
 
-    public DotFrame(){
-        this.setTitle("drawing");
-        this.setDefaultCloseOperation((JFrame.EXIT_ON_CLOSE));
+    public MyFrame(){
+        // this : JFrame : 출력된 화면
+        this.setTitle("Drawing");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1000,600);
         this.setVisible(true);
-        // this.add(new Khan()); 씹힘
-        this.add(new DDA_Alg(0,0,8,10));
     }
 
-    // 기본창 생성
-    class Khan extends JPanel{
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-            g.setColor(Color.gray);
-            
-            for(int i=0; i<count; i++){
-                int Khan_start_x = 20;
-                
-                for(int j=0; j<count; j++){
-                    g.drawRect(Khan_start_x, Khan_start_y, Khan_width, Khan_height);
-                    Khan_start_x += gap;
-                }
-                Khan_start_y += gap;
+    @Override
+    public void paint(Graphics g){
+        this.g = g;
+        paint_dot(this.g);
+        paint_Alg(this.g);
+    }
+
+    public int reverse_y(int y){
+        return global_size - y;
+    }
+
+    // 모눈 종이 생성
+    public void paint_dot(Graphics g){
+        int paint_x = this.start_x;
+        int paint_y = this.start_y;
+
+        g.setColor(Color.gray);
+        for(int i=0; i<this.rect_count; i++){
+            for(int j=0; j<this.rect_count; j++){
+                g.drawRect(paint_x, reverse_y(paint_y), this.rect_size, this.rect_size);
+                paint_x += this.rect_size;
             }
+            paint_x = this.start_x;
+            paint_y += this.rect_size;
         }
     }
+
+    // 테스트 버전
+    public void paint_Alg(Graphics g){
+        g.clearRect(0, 0, 1000, 600);
+        paint_dot(g);
+
+        g.setColor(Color.black);
+        for(int i=0; i<3; i++){
+            g.fillRect(30, reverse_y(30), this.rect_size, this.rect_size);
+        }
+    }
+
     // DDA 알고리즘
-    class DDA_Alg extends JPanel{
-        int x1, x2, y1, y2;
-        public DDA_Alg(int x1, int y1, int x2, int y2){
-            this.x1 = x1;
-            this.x2 = x2;
-            this.y1 = y1;
-            this.y2 = y2;
-        }
+    public void DDA_Alg(Graphics g){
 
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-            g.setColor(Color.black);
-            int dx = x2-x1;
-            int dy = y2-y1;
-            float m = (float)dy/(float)dx;
-
-            // case2: 1 > m
-            if( 1 > m ){
-                float y = 0;
-                for(int x=x1; x<x2; x++){
-                    y = y + m;
-                    if(y%1 > 0.5){
-                        g.fillRect(gap*x, global_size - ((int)y+1)*gap, gap, gap);
-                    }
-                    else{
-                        g.fillRect(gap*x, global_size - (int)y*gap, gap, gap);
-                    }
-                }
-            }
-
-            // case1: 1 < m
-            if( 1 < m ){
-                float x = 0;
-                for(int y=y1; y<y2; y++){
-                    x = x + m;
-                    if(x%1 > 0.5){
-                        g.fillRect(((int)x+1)*gap, global_size - y*gap, gap, gap);
-                    }
-                    else{
-                        g.fillRect((int)x*gap, global_size - y*gap, gap, gap);
-                    }
-                }
-            }
-        }
     }
 }
