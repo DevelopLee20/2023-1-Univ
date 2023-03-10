@@ -89,22 +89,30 @@ public class CGPanel extends JPanel {
                 int_y1 = Integer.parseInt(y1.getText());
                 int_x2 = Integer.parseInt(x2.getText());
                 int_y2 = Integer.parseInt(y2.getText());
-                new DDA_Alg(int_x1, int_y1, int_x2, int_y2);
+                new Graphics_Alg().DDA_Alg(int_x1, int_y1, int_x2, int_y2);
 
                 gpanel.repaint();
             });
             btnClear.addActionListener(e -> {
                 arr.clear();
                 gpanel.repaint();
+                x1.setText("");
+                x2.setText("");
+                y1.setText("");
+                y2.setText("");
             });
         }
 
-        class DDA_Alg{
+        class Graphics_Alg{
             private int x1, y1, x2, y2;
             private float m;
             private boolean m_bool;
 
-            DDA_Alg(int x1, int y1, int x2, int y2){
+            Graphics_Alg(){
+                arr.clear();
+            }
+
+            public void DDA_Alg(int x1, int y1, int x2, int y2){
                 this.x1 = x1;
                 this.y1 = y1;
                 this.x2 = x2;
