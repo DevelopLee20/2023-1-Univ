@@ -104,7 +104,7 @@ public class CGPanel extends JPanel {
         }
 
         class Graphics_Alg{
-            private int x1, y1, x2, y2;
+            public int x1, y1, x2, y2;
             private float m;
             private boolean m_bool;
 
@@ -117,9 +117,24 @@ public class CGPanel extends JPanel {
                 this.y1 = y1;
                 this.x2 = x2;
                 this.y2 = y2;
-                m = (float)(y2-y1) / (float)(x2-x1);
+                reverse();
+                m = (float)(this.y2-this.y1) / (float)(this.x2-this.x1);
                 m_bool = (1 >= Math.abs(m));
-                xyget();
+
+                if(m_bool){
+                    float y = this.y1;
+                    for(int x=this.x1; x<=this.x2; x++){
+                        arr.add(0, new xypos(x, return_int(y)));
+                        y += m;
+                    }
+                }
+                else{
+                    float x = this.x1;
+                    for(int y=this.y1; y<=this.y2; y++){
+                        arr.add(0, new xypos(return_int(x), y));
+                        x += 1/m;
+                    }
+                }
             }
 
             public int return_int(float value){
@@ -142,40 +157,15 @@ public class CGPanel extends JPanel {
                 }
             }
 
-            public void xyget(){
-                // 방향성에 따라서 수정이 필요해 보인다. 수정하자.
-                if(m_bool){
-                    if(x1 <= x2){
-                        float y = y1;
-                        for(int x=x1; x<=x2; x++){
-                            arr.add(0, new xypos(x, return_int(y)));
-                            y += m;
-                        }
-                    }
-                    else{
-                        float y = y1;
-                        for(int x=x1; x>=x2; x--){
-                            arr.add(0, new xypos(x, return_int(y)));
-                            y += m;
-                        }
-                    }
-                }
-                else{
-                    if(y1 <= y2){
-                        float x = x1;
-                        for(int y=y1; y<=y2; y++){
-                            arr.add(0, new xypos(return_int(x), y));
-                            x += 1/m;
-                        }
-                    }
-                    else{
-                        float x = x1;
-                        System.out.println(m);
-                        for(int y=y1; y>=y2; y--){
-                            arr.add(0, new xypos(return_int(x), y));
-                            x += 1/m;
-                        }
-                    }
+            public void reverse(){
+                if(this.x1 > this.x2){
+                    int temp = this.x1;
+                    this.x1 = this.x2;
+                    this.x2 = temp;
+                    
+                    temp = this.y1;
+                    this.y1 = this.y2;
+                    this.y2 = temp;
                 }
             }
         }
