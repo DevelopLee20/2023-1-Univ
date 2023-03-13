@@ -118,25 +118,63 @@ public class CGPanel extends JPanel {
                 this.x2 = x2;
                 this.y2 = y2;
                 m = (float)(y2-y1) / (float)(x2-x1);
-                m_bool = (1 > m);
+                m_bool = (1 >= Math.abs(m));
                 xyget();
             }
 
             public int return_int(float value){
-                if(value % 1 > 0.5){
-                    return (int)value + 1;
+                // 양수일 때와 음수일 때 다르게 처리
+                if(value >= 0){
+                    if(value % 1 > 0.5){
+                        return (int)value + 1;
+                    }
+                    else{
+                        return (int)value;
+                    }
                 }
                 else{
-                    return (int)value;
+                    if(value % 1 > 0.5){
+                        return (int)value - 1;
+                    }
+                    else{
+                        return (int)value;
+                    }
                 }
             }
 
             public void xyget(){
+                // 방향성에 따라서 수정이 필요해 보인다. 수정하자.
                 if(m_bool){
-                    float y = y1;
-                    for(int x=x1; x<=x2; x++){
-                        arr.add(0, new xypos(x, return_int(y)));
-                        y += m;
+                    if(x1 <= x2){
+                        float y = y1;
+                        for(int x=x1; x<=x2; x++){
+                            arr.add(0, new xypos(x, return_int(y)));
+                            y += m;
+                        }
+                    }
+                    else{
+                        float y = y1;
+                        for(int x=x1; x>=x2; x--){
+                            arr.add(0, new xypos(x, return_int(y)));
+                            y += m;
+                        }
+                    }
+                }
+                else{
+                    if(y1 <= y2){
+                        float x = x1;
+                        for(int y=y1; y<=y2; y++){
+                            arr.add(0, new xypos(return_int(x), y));
+                            x += 1/m;
+                        }
+                    }
+                    else{
+                        float x = x1;
+                        System.out.println(m);
+                        for(int y=y1; y>=y2; y--){
+                            arr.add(0, new xypos(return_int(x), y));
+                            x += 1/m;
+                        }
                     }
                 }
             }
