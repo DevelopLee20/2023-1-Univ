@@ -120,4 +120,114 @@ void cal_6(int number1){
     Console.WriteLine("회문수 입니다!");
 }
 
-cal_1();
+void cal_7(){
+    for(int i=100; i<=500; i++){
+        int x = i / 100;
+        int y = i / 10 % 10;
+        int z = i % 10;
+
+        if(i == Math.Pow(x, 3)+Math.Pow(y, 3)+Math.Pow(z, 3)){
+            Console.Write(i + " ");
+        }
+    }
+}
+
+void cal_8(int a, int b){
+    int i = 0;
+    int g = 0;
+
+    Console.WriteLine("수1: " + a);
+    Console.WriteLine("수2: " + b);
+
+    while((i != a) && (i != b)){
+        i += 1;
+
+        if(a % i == 0 && b % i == 0){
+            g = i;
+        }
+    }
+    Console.WriteLine("최대 공약수: " + g);
+    Console.WriteLine("최소 공배수: " + a * b / g);
+}
+
+void cal_9(){
+    for(int i=1; i<=9; i+=2){
+        int blank = (9-i)/2;
+        for(int j=0; j<blank; j++){
+            Console.Write(" ");
+        }
+        for(int j=0; j<i; j++){
+            Console.Write("*");
+        }
+        for(int j=0; j<blank; j++){
+            Console.Write(" ");
+        }
+        Console.WriteLine();
+    }
+    for(int i=7; i>=0; i-=2){
+        int blank = (9-i)/2;
+        for(int j=0; j<blank; j++){
+            Console.Write(" ");
+        }
+        for(int j=0; j<i; j++){
+            Console.Write("*");
+        }
+        for(int j=0; j<blank; j++){
+            Console.Write(" ");
+        }
+        Console.WriteLine();
+    }
+}
+
+void cal_10(int value){
+    int back5 = 0;
+    int back1 = 0;
+    int sip5 = 0;
+    int sip1 = 0;
+    int one5 = 0;
+    int one1 = 0;
+
+    while(value != 0){
+        if(value >= 500){
+            value -= 500;
+            back5 += 1;
+            continue;
+        }
+        if(value >= 100){
+            value -= 100;
+            back1 += 1;
+            continue;
+        }
+        if(value >= 50){
+            value -= 50;
+            sip5 += 1;
+            continue;
+        }
+        if(value >= 10){
+            value -= 10;
+            sip1 += 1;
+            continue;
+        }
+        if(value >= 5){
+            value -= 5;
+            one5 += 1;
+            continue;
+        }
+        if(value >= 1){
+            value -= 1;
+            one1 += 1;
+            continue;
+        }
+    }
+
+    Console.WriteLine("500원 " + back5 + "개");
+    Console.WriteLine("100원 " + back1 + "개");
+    Console.WriteLine("50원 " + sip5 + "개");
+    Console.WriteLine("10원 " + sip1 + "개");
+    Console.WriteLine("5원 " + one5 + "개");
+    Console.WriteLine("1원 " + one1 + "개");
+}
+
+Console.WriteLine("상품가격을 입력하시오 (1000원 미만)");
+int value = Console.Read();
+cal_10(value);
