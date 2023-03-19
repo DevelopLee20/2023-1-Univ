@@ -1,233 +1,192 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿// // 문제 1번
 
-void cal_1(){
-    int temp1 = 0;
-    int temp2 = 1;
+// int[,] transpose(int[,] array){
+//     int[,] temp = new int[array.GetLength(1), array.GetLength(0)];
+//     for(int i=0; i<array.GetLength(0); i++){
+//         for(int j=0; j<array.GetLength(1); j++){
+//             temp[j,i] = array[i,j];
+//         }
+//     }
+//     return temp;
+// }
 
-    for(int i=1; i<=100; i++){
-        temp1 += 2 * i;
-    }
+// int[,] array_1 = {{1,2,3},{4,5,6}};
+// int[,] array_2 = transpose(array_1);
 
-    for(int i=1; i<=10; i++){
-        temp2 *= i;
-    }
+// for(int i=0; i<array_2.GetLength(0); i++){
+//     for(int j=0; j<array_2.GetLength(1); j++){
+//         Console.Write(array_2[i,j] + " ");
+//     }
+//     Console.WriteLine();
+// }
 
-    Console.WriteLine(temp1 + temp2);
-}
+// // 문제 2번
 
-void cal_2_a(){
-    int temp1 = 1;
-    int temp2 = 1;
+// char[] com = {'C','o','m','p','u','t','e','r'};
 
-    for(int i=2; i<=10; i++){
-        temp2 *= i;
-        temp1 += temp2;
-    }
+// foreach(char i in com){
+//     Console.Write(i);
+// }
+// Console.WriteLine();
 
-    Console.WriteLine(temp1);
-}
+// // 문제 3번
 
-void cal_2_b(){
-    double temp = 1;
+// int[][] array = new int[3][]{
+//     new int[] {0,1,2},
+//     new int[] {4,5,6,7},
+//     new int[] {10,11,12,13,14}
+// };
 
-    for(double i=2; i<=10; i++){
-        if(i % 2 == 0){
-            temp -= 1.0 / i;
-        }
-        else{
-            temp += 1.0 / i;
-        }
-    }
+// for(int i=0; i<array.GetLength(0); i++){
+//     for(int j=0; j<array[i].Length; j++){
+//         Console.Write(array[i][j] + " ");
+//     }
+//     Console.WriteLine();
+// }
 
-    Console.WriteLine(temp);
-}
+// // 문제 4번
 
-void cal_3(){
-    for(int i=1; i<=9; i++){
-        for(int j=2; j<=5; j++){
-            Console.Write(j + " * " + i + " = " + j*i + ", ");
-        }
-        Console.WriteLine();
-    }
+// Random r = new Random();
+// int[] random = new int[5];
 
-    Console.WriteLine();
+// for(int i=0; i<5; i++){
+//     random[i] = r.Next(100) + 1;
+//     Console.Write(random[i] + " ");
+// }
+// Console.WriteLine();
 
-    for(int i=1; i<=9; i++){
-        for(int j=6; j<=9; j++){
-            Console.Write(j + " * " + i + " = " + j*i + ", ");
-        }
-        Console.WriteLine();
-    }
-}
+// for(int i=0; i<5; i++){
+//     for(int j=1; j<5; j++)
+//         if(random[j-1] < random[j]){
+//             int temp = random[j-1];
+//             random[j-1] = random[j];
+//             random[j] = temp;
+//         }
+// }
 
-void cal_4(){
-    bool check = true;
+// for(int i=0; i<5; i++){
+//     Console.WriteLine(random[i]);
+// }
 
-    for(int i=2; i<=100; i++){
-        for(int j=2; j<=(int)Math.Sqrt(i); j++){
-            if(i % j == 0){
-                check = false;
-                break;
-            }
-        }
+// // 문제 5번
 
-        if(check){
-            Console.Write(i + ", ");
-        }
+// Random r = new Random();
+// double[] random = new double[5];
 
-        check = true;
-    }
-    Console.WriteLine();
-}
+// for(int i=0; i<5; i++){
+//     random[i] = r.Next(100) + r.NextDouble();
+//     Console.Write(random[i] + " ");
+// }
+// Console.WriteLine();
 
-void cal_5(){
-    for(int i=2; i<=500; i++){
-        int temp = 1;
+// for(int i=0; i<5; i++){
+//     for(int j=1; j<5; j++)
+//         if(random[j-1] < random[j]){
+//             double temp = random[j-1];
+//             random[j-1] = random[j];
+//             random[j] = temp;
+//         }
+// }
 
-        for(int j=2; j<i; j++){
-            if(i % j == 0){
-                temp += j;
-            }
-        }
+// for(int i=0; i<5; i++){
+//     Console.WriteLine(random[i]);
+// }
 
-        if(i == temp){
-            Console.Write(i + ", ");
-        }
-    }
-}
+// // 문제 6번
 
-void cal_6(int number1){
-    int number2 = number1;
-    int temp = 1;
+// int[,] hang1 = {{1,2},{3,4}};
+// int[,] hang2 = {{5,6},{7,8}};
 
-    Console.Write(number2 + "는 ");
+// for(int i=0; i<hang1.GetLength(0); i++){
+//     for(int j=0; j<hang2.GetLength(1); j++){
+//         int sum = 0;
+//         for(int k=0; k<hang1.GetLength(1); k++){
+//             sum += hang1[i,k] * hang2[k,j];
+//         }
+//         Console.Write(sum + " ");
+//     }
+//     Console.WriteLine();
+// }
 
-    while(number1 > temp*10){
-        temp *= 10;
-    }
+// // 문제 7번
 
-    while(temp >= 1){
-        if(number1 / temp != number2 % 10){
-            Console.WriteLine("회문수가 아닙니다!");
-            return;
-        }
-        number1 %= temp;
-        temp /= 10;
-        number2 /= 10;
-    }
+// int[,] score = new int[3,5];
 
-    Console.WriteLine("회문수 입니다!");
-}
+// for(int j=0; j<5; j++){
+//     Console.Write("국어: ");
+//     score[0,j] = Int32.Parse(Console.ReadLine());
+// }
+// for(int j=0; j<5; j++){
+//     Console.Write("영어: ");
+//     score[1,j] = Int32.Parse(Console.ReadLine());
+// }
+// for(int j=0; j<5; j++){
+//     Console.Write("수학: ");
+//     score[2,j] = Int32.Parse(Console.ReadLine());
+// }
 
-void cal_7(){
-    for(int i=100; i<=500; i++){
-        int x = i / 100;
-        int y = i / 10 % 10;
-        int z = i % 10;
+// int sum;
 
-        if(i == Math.Pow(x, 3)+Math.Pow(y, 3)+Math.Pow(z, 3)){
-            Console.Write(i + " ");
-        }
-    }
-}
+// for(int i=0; i<5; i++){
+//     sum = score[0,i] + score[1,i] + score[2,i];
 
-void cal_8(int a, int b){
-    int i = 0;
-    int g = 0;
+//     Console.WriteLine();
+//     Console.WriteLine("학생" + i);
+//     Console.WriteLine("총점: " + sum);
+//     Console.WriteLine("평균: " + sum/3);
+// }
 
-    Console.WriteLine("수1: " + a);
-    Console.WriteLine("수2: " + b);
+// Console.WriteLine();
 
-    while((i != a) && (i != b)){
-        i += 1;
+// sum = 0;
+// for(int j=0; j<5; j++){
+//     sum += score[0,j];
+// }
+// Console.WriteLine("국어 과목 평균: " + sum/5);
 
-        if(a % i == 0 && b % i == 0){
-            g = i;
-        }
-    }
-    Console.WriteLine("최대 공약수: " + g);
-    Console.WriteLine("최소 공배수: " + a * b / g);
-}
+// sum = 0;
+// for(int j=0; j<5; j++){
+//     sum += score[1,j];
+// }
+// Console.WriteLine("영어 과목 평균: " + sum/5);
 
-void cal_9(){
-    for(int i=1; i<=9; i+=2){
-        int blank = (9-i)/2;
-        for(int j=0; j<blank; j++){
-            Console.Write(" ");
-        }
-        for(int j=0; j<i; j++){
-            Console.Write("*");
-        }
-        for(int j=0; j<blank; j++){
-            Console.Write(" ");
-        }
-        Console.WriteLine();
-    }
-    for(int i=7; i>=0; i-=2){
-        int blank = (9-i)/2;
-        for(int j=0; j<blank; j++){
-            Console.Write(" ");
-        }
-        for(int j=0; j<i; j++){
-            Console.Write("*");
-        }
-        for(int j=0; j<blank; j++){
-            Console.Write(" ");
-        }
-        Console.WriteLine();
-    }
-}
+// sum = 0;
+// for(int j=0; j<5; j++){
+//     sum += score[2,j];
+// }
+// Console.WriteLine("수학 과목 평균: " + sum/5);
 
-void cal_10(int value){
-    int back5 = 0;
-    int back1 = 0;
-    int sip5 = 0;
-    int sip1 = 0;
-    int one5 = 0;
-    int one1 = 0;
+// // 문제 8번
 
-    while(value != 0){
-        if(value >= 500){
-            value -= 500;
-            back5 += 1;
-            continue;
-        }
-        if(value >= 100){
-            value -= 100;
-            back1 += 1;
-            continue;
-        }
-        if(value >= 50){
-            value -= 50;
-            sip5 += 1;
-            continue;
-        }
-        if(value >= 10){
-            value -= 10;
-            sip1 += 1;
-            continue;
-        }
-        if(value >= 5){
-            value -= 5;
-            one5 += 1;
-            continue;
-        }
-        if(value >= 1){
-            value -= 1;
-            one1 += 1;
-            continue;
-        }
-    }
+// int num = Int32.Parse(Console.ReadLine());
+// int x = 0;
+// int y = num / 2;
+// int[,] array = new int[num,num];
 
-    Console.WriteLine("500원 " + back5 + "개");
-    Console.WriteLine("100원 " + back1 + "개");
-    Console.WriteLine("50원 " + sip5 + "개");
-    Console.WriteLine("10원 " + sip1 + "개");
-    Console.WriteLine("5원 " + one5 + "개");
-    Console.WriteLine("1원 " + one1 + "개");
-}
+// for(int i=1; i<=num*num; i++){
+//     array[x,y] = i;
 
-Console.WriteLine("상품가격을 입력하시오 (1000원 미만)");
-int value = Console.Read();
-cal_10(value);
+//     if(i % num == 0){
+//         x += 1;
+//         if(x == 3){
+//             x = 0;
+//         }
+//     }
+//     else{
+//         x -= 1;
+//         y -= 1;
+//         if(x == -1){
+//             x = num - 1;
+//         }
+//         if(y == -1){
+//             y = num - 1;
+//         }
+//     }
+// }
+
+// for(int i=0; i<num; i++){
+//     for(int j=0; j<num; j++){
+//         Console.Write(array[i,j] + " ");
+//     }
+//     Console.WriteLine();
+// }
