@@ -1,24 +1,24 @@
-﻿// // 문제 1번
+﻿// 문제 1번
 
-// int[,] transpose(int[,] array){
-//     int[,] temp = new int[array.GetLength(1), array.GetLength(0)];
-//     for(int i=0; i<array.GetLength(0); i++){
-//         for(int j=0; j<array.GetLength(1); j++){
-//             temp[j,i] = array[i,j];
-//         }
-//     }
-//     return temp;
-// }
+int[,] transpose(int[,] array){
+    int[,] temp = new int[array.GetLength(1), array.GetLength(0)];
+    for(int i=0; i<array.GetLength(0); i++){
+        for(int j=0; j<array.GetLength(1); j++){
+            temp[j,i] = array[i,j];
+        }
+    }
+    return temp;
+}
 
-// int[,] array_1 = {{1,2,3},{4,5,6}};
-// int[,] array_2 = transpose(array_1);
+int[,] array_1 = {{1,2,3},{4,5,6}};
+int[,] array_2 = transpose(array_1);
 
-// for(int i=0; i<array_2.GetLength(0); i++){
-//     for(int j=0; j<array_2.GetLength(1); j++){
-//         Console.Write(array_2[i,j] + " ");
-//     }
-//     Console.WriteLine();
-// }
+for(int i=0; i<array_2.GetLength(0); i++){
+    for(int j=0; j<array_2.GetLength(1); j++){
+        Console.Write(array_2[i,j] + " ");
+    }
+    Console.WriteLine();
+}
 
 // // 문제 2번
 
