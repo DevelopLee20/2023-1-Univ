@@ -6,7 +6,7 @@ public class CGMain extends JFrame{
         add(new CGPanel());
         pack();
         setTitle("CGBoard");
-        //setLayout(new FlowLayout());    //배치관리자 설정
+        // setLayout(new FlowLayout());    //배치관리자 설정
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }

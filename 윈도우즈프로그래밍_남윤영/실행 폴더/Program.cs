@@ -1,21 +1,24 @@
 ﻿// // 문제 1
 // int a, b, c;
 
+// Console.Write("a를 입력하세요 : ");
 // a = Int32.Parse(Console.ReadLine());
+// Console.Write("b를 입력하세요 : ");
 // b = Int32.Parse(Console.ReadLine());
+// Console.Write("c를 입력하세요 : ");
 // c = Int32.Parse(Console.ReadLine());
 
 // double answer1 = (-b + Math.Sqrt(b*b - 4*a*c)) / 2*a;
 // double answer2 = (-b - Math.Sqrt(b*b - 4*a*c)) / 2*a;
 
-// if (double.IsNaN(answer1) == false){
-//     Console.Write("값1: ");
-//     Console.WriteLine(answer1);
-//     Console.Write("값2: ");
-//     Console.WriteLine(answer2);
+// if ((Math.Sqrt(b*b - 4*a*c)) > 0){
+//     Console.WriteLine("첫 번째 근은 " + answer1 + "이고, 두 번째 근은" + answer2 + "입니다.");
+// }
+// else if((Math.Sqrt(b*b - 4*a*c)) < 0){
+//     Console.WriteLine("허근입니다.");
 // }
 // else{
-//     Console.WriteLine("값이 NaN(Not a Number, 허근) 값입니다.");
+//     Console.WriteLine("첫 번째 근은 " + answer1);
 // }
 
 // // 문제 2
