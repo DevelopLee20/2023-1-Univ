@@ -13,6 +13,8 @@ public class CGPanel extends JPanel {
 
     private ArrayList<xypos> DDA_arr = new ArrayList<>();       // DDA 좌표
     private ArrayList<xypos> BSH_arr = new ArrayList<>();       // BSH 좌표
+    private ArrayList<xypos> MEA_arr = new ArrayList<>();       // MEA 좌표
+    private ArrayList<xypos> MOVE_arr = new ArrayList<>();       // MOVE 좌표
 
     CGPanel() {
         setLayout(new FlowLayout());
@@ -71,6 +73,17 @@ public class CGPanel extends JPanel {
             for(xypos p : BSH_arr){
                 g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
             }
+
+            for(xypos p : MOVE_arr){
+                System.out.println("MOVE_arr in draw_line");
+                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
+            }
+
+            for(xypos p : MEA_arr){
+                System.out.println("MEA_arr in draw_line");
+                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
+            }
+
             
             g2.setColor(Color.red);
             if(DDA_arr.size() == BSH_arr.size()){
@@ -94,11 +107,13 @@ public class CGPanel extends JPanel {
         int int_x1, int_y1, int_x2, int_y2;
 
         panel_control(){
-            setPreferredSize(new Dimension(300, 100));
-            setLayout(new GridLayout(4, 4, 2, 2));
+            setPreferredSize(new Dimension(600, 200));
+            setLayout(new GridLayout(8, 4, 2, 2));
 
             Button_Maker DDA_Buttons = new Button_Maker("DDA");
             Button_Maker BSH_Buttons = new Button_Maker("BSH");
+            Button_Maker MEA_Buttons = new Button_Maker("MEA");
+            Button_Maker MOVE_Buttons = new Button_Maker("MOVE");
         }
 
         class Button_Maker{
@@ -151,21 +166,41 @@ public class CGPanel extends JPanel {
 
             public void Choice_Arr(String name){
                 if(name == "DDA"){
+                    System.out.println("Choice_Arr -> DDA");
                     DDA_arr.clear();
                 }
                 if(name == "BSH"){
+                    System.out.println("Choice_Arr -> BSH");
                     BSH_arr.clear();
                 }
+                if(name == "MEA"){
+                    System.out.println("Choice_Arr -> MEA");
+                    MEA_arr.clear();
+                }
+                if(name == "MOVE"){
+                    System.out.println("Choice_Arr -> MOVE");
+                    MEA_arr.clear();
+                    MOVE_arr.clear();
+                }
+                
             }
 
             public void Choice_Alg(String name, int x1, int x2, int y1, int y2){
                 if(name == "DDA"){
-                    System.out.println("DDA 알고리즘 호출!");
+                    System.out.println("Choice_Alg -> DDA 알고리즘 호출!");
                     new Graphics_Alg(x1, y1, x2, y2).DDA_Alg();
                 }
                 if(name == "BSH"){
-                    System.out.println("BSH 알고리즘 호출!");
+                    System.out.println("Choice_Alg -> BSH 알고리즘 호출!");
                     new Graphics_Alg(x1, y1, x2, y2).BSH_Alg();
+                }
+                if(name == "MEA"){
+                    System.out.println("Choice_Alg -> MEA 알고리즘 호출!");
+                    new Graphics_Alg(x1, y1, x2, y2).MEA_Alg();
+                }
+                if(name == "MOVE"){
+                    System.out.println("Choice_Alg -> MOVE 알고리즘 호출!");
+                    new Graphics_Alg(x1, y1, x2, y2).move();
                 }
             }
         }
@@ -249,6 +284,54 @@ public class CGPanel extends JPanel {
                         p = p + 2 * dy;
                     }
 
+                }
+            }
+
+            // Mid Point Ellipse 알고리즘
+            public void MEA_Alg(){
+                System.out.println("MEA_Alg -> MEA 알고리즘 실행");
+                // x1, y1: 좌표, x2: radian으로 쓸거임
+                int x = 0;
+                int y = x2;
+                int p = 1 - x2;
+
+                // 좌표 세이브
+                CirclePlotPoints(x1, y1, x, y);
+
+                while(x < y){
+                    x++;
+
+                    if(p < 0){
+                        p += 2 * x + 1;
+                    }
+                    else{
+                        y--;
+                        p += 2 * (x - y) + 1;
+                    }
+                    // 좌표 세이브
+                    CirclePlotPoints(x1, y1, x, y);
+                }
+            }
+
+            void CirclePlotPoints(int xCenter, int yCenter, int x, int y){
+                MEA_arr.add(0, new xypos(xCenter + x, yCenter + y, 0));
+                MEA_arr.add(0, new xypos(xCenter - x, yCenter + y, 0));
+                MEA_arr.add(0, new xypos(xCenter + x, yCenter - y, 0));
+                MEA_arr.add(0, new xypos(xCenter - x, yCenter - y, 0));
+                MEA_arr.add(0, new xypos(xCenter + y, yCenter + x, 0));
+                MEA_arr.add(0, new xypos(xCenter - y, yCenter + x, 0));
+                MEA_arr.add(0, new xypos(xCenter + y, yCenter - x, 0));
+                MEA_arr.add(0, new xypos(xCenter - y, yCenter - x, 0));
+            }
+
+            public void move(){
+                // x1, y1 이동될 중점
+                int x1 = this.x1;
+                int y1 = this.x2;
+
+                for(xypos p : MEA_arr){
+                    System.out.println(p.x);
+                    MOVE_arr.add(0, new xypos((p.x + x1), (p.y + y1), 0));
                 }
             }
 
