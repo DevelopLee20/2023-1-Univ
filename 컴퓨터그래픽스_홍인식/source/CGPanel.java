@@ -2,43 +2,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class CGPanel extends JPanel {
+// 좌표 저장하는 클래스
+class xypos{
+    int x, y;
 
-    private final int pix = 10;         // 종이 가로세로 크기
-    private final int numX = 30;        // 종이 X 개수
-    private final int numY = 30;        // 종이 Y 개수
-    private final int sizeX = numX*pix; // 종이 전체 X 사이즈
-    private final int sizeY = numY*pix; // 종이 전체 Y 개수
-    private panel_graph gpanel;         // 판넬 객체 저장
+    public xypos(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+}
 
-    private ArrayList<xypos> DDA_arr = new ArrayList<>();       // DDA 좌표
-    private ArrayList<xypos> BSH_arr = new ArrayList<>();       // BSH 좌표
-    private ArrayList<xypos> MEA_arr = new ArrayList<>();       // MEA 좌표
-    private ArrayList<xypos> MOVE_arr = new ArrayList<>();       // MOVE 좌표
+// 레이아웃 클래스
+public class CGPanel extends JPanel{
+    final int pix = 10;
+    final int numX = 30;
+    final int numY = 30;
+    final int sizeX = numX * pix;
+    final int sizeY = numY * pix;
 
-    CGPanel() {
+    CGPad cgpad;
+
+    MidPointEllipse MEA_Algorithm;
+    DDA DDA_Algorithm;
+    Bresenham BSH_Algorithm;
+
+    CGPanel(){
+        cgpad = new CGPad();
+        
         setLayout(new FlowLayout());
-        gpanel = new panel_graph();
-        add(gpanel);
-        add(new panel_control());
+        add(cgpad);
+        add(new CGButton()); // control이 들어가야 함
     }
 
-    // (x,y)좌표 점 클래스
-    class xypos{
-        int x, y;
-        int change;
-
-        public xypos(int x, int y, int change){
-            this.x = x;
-            this.y = y;
-            this.change = change;
-        }
-    }
-
-    class panel_graph extends JPanel{
-        panel_graph(){
-            //모눈종이 끝 선 안잘리게 패널 크기를 모눈종이보다 조금 더 크게 한다.
-            setPreferredSize(new Dimension((sizeX+1)*2, (sizeY+1)*2));
+    // 모눈 종이 클래스
+    class CGPad extends JPanel{
+        CGPad(){
+            setPreferredSize(new Dimension((sizeX + 1) * 2, (sizeY + 1) * 2));
         }
 
         public void paintComponent(Graphics g){
@@ -61,352 +60,457 @@ public class CGPanel extends JPanel {
             g2.drawLine(-sizeX, 0, sizeX, 0);
             g2.drawLine(0, -sizeY, 0, sizeY);
 
-            draw_line(g2);
-        }
+            g.setColor(Color.black);
+            if(MEA_Algorithm != null){
 
-        public void draw_line(Graphics g2){
-            g2.setColor(Color.black);
-            for(xypos p : DDA_arr){
-                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
+                for(xypos point : MEA_Algorithm.array){
+                    boolean inpad = (point.x <= numX && point.x >= -numX && point.y <= numY && point.y >= -numY);
+
+                    if(inpad){
+                        g.fillRect(point.x * pix, -(point.y + 1) * pix, pix, pix);
+                    }
+                }
             }
 
-            for(xypos p : BSH_arr){
-                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
+            if(DDA_Algorithm != null){
+                for(xypos point : DDA_Algorithm.array){
+                    boolean inpad = (point.x <= numX && point.x >= -numX && point.y <= numY && point.y >= -numY);
+
+                    if(inpad){
+                        g.fillRect(point.x * pix, -(point.y + 1) * pix, pix, pix);
+                    }
+                }
             }
 
-            for(xypos p : MOVE_arr){
-                System.out.println("MOVE_arr in draw_line");
-                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
-            }
+            if(BSH_Algorithm != null){
+                for(xypos point : BSH_Algorithm.array){
+                    boolean inpad = (point.x <= numX && point.x >= -numX && point.y <= numY && point.y >= -numY);
 
-            for(xypos p : MEA_arr){
-                System.out.println("MEA_arr in draw_line");
-                g2.fillRect(p.x * pix, -(p.y + 1) * pix, pix, pix);
-            }
-
-            
-            g2.setColor(Color.red);
-            if(DDA_arr.size() == BSH_arr.size()){
-                for(int i=0; i<DDA_arr.size(); i++){
-                    xypos dda = DDA_arr.get(i);
-                    xypos bsh = BSH_arr.get(i);
-    
-                    if(dda.change != bsh.change){
-                        g2.fillRect(dda.x * pix, -(dda.y + 1) * pix, pix, pix);
-                        g2.fillRect(bsh.x * pix, -(bsh.y + 1) * pix, pix, pix);
+                    if(inpad){
+                        g.fillRect(point.x * pix, -(point.y + 1) * pix, pix, pix);
                     }
                 }
             }
         }
     }
-    class panel_control extends JPanel{
-        JTextField x1, y1, x2, y2;
-        JTextField b_x1, b_y1, b_x2, b_y2;
-        JButton btn1, btnClear;
-        JButton b_btn1, b_btnClear;
-        int int_x1, int_y1, int_x2, int_y2;
 
-        panel_control(){
-            setPreferredSize(new Dimension(600, 200));
-            setLayout(new GridLayout(8, 4, 2, 2));
+    class CGButton extends JPanel{
+        CGButton(){
+            setPreferredSize(new Dimension(800, 400));
+            // row, cols, gaps -> 칸이 적을경우 rows를 우선적으로 지킴
+            setLayout(new GridLayout(5, 8, 2, 2));
+            
+            System.out.println("CGButton() 체크");
 
-            Button_Maker DDA_Buttons = new Button_Maker("DDA");
-            Button_Maker BSH_Buttons = new Button_Maker("BSH");
-            Button_Maker MEA_Buttons = new Button_Maker("MEA");
-            Button_Maker MOVE_Buttons = new Button_Maker("MOVE");
+            MEA_Buttons();
+            DDA_Buttons();
+            BSH_Buttons();
+            MOVE_Buttons();
+            ZIZO_Buttons();
         }
 
-        class Button_Maker{
+        public void ZIZO_Buttons(){
+            JLabel sizes = new JLabel("Size");
+            JTextField size = new JTextField();
+            JButton algButton = new JButton("Z In/Out");
+
+            add(sizes);
+            add(size);
+            add(new JLabel());
+            add(new JLabel());
+            add(new JLabel());
+            add(new JLabel());
+            add(algButton);
+            add(new JLabel());
+
+            algButton.addActionListener(e ->{
+                int Dradian = Integer.parseInt(size.getText());
+
+                if(MEA_Algorithm != null){
+                    MEA_Algorithm = new MidPointEllipse(MEA_Algorithm.GetPoint_x(), MEA_Algorithm.GetPoint_y(), MEA_Algorithm.GetRadian() + Dradian);
+                }
+
+                cgpad.repaint();
+            });
+        }
+
+        public void MOVE_Buttons(){
+            // 확대, 축소, 이동 중 일단 이동 작성
+            JLabel point1 = new JLabel("Move Point");
+            JTextField x1 = new JTextField();
+            JTextField y1 = new JTextField();
+            JButton algButton = new JButton("Move");
+
+            add(point1);
+            add(x1);
+            add(y1);
+            add(new JLabel());
+            add(new JLabel());
+            add(new JLabel());
+            add(algButton);
+            add(new JLabel());
+
+            algButton.addActionListener(e ->{
+                int int_x1 = Integer.parseInt(x1.getText());
+                int int_y1 = Integer.parseInt(y1.getText());
+
+                if(MEA_Algorithm != null && MEA_Algorithm.array.size() != 0){
+                    MEA_Algorithm.SetPoint_x(int_x1);
+                    MEA_Algorithm.SetPoint_y(int_y1);
+                    MEA_Algorithm.move(int_x1, int_y1);
+                }
+
+                // if(DDA_Algorithm != null && DDA_Algorithm.array.size() != 0){
+                //     DDA_Algorithm.move(int_x1, int_y1);
+                //     DDA_Algorithm.SetPoint_x(int_x1);
+                //     DDA_Algorithm.SetPoint_y(int_y1);
+                // }
+                // if(BSH_Algorithm != null && BSH_Algorithm.array.size() != 0){
+                //     BSH_Algorithm.move(int_x1, int_y1);
+                //     BSH_Algorithm.SetPoint_x(int_x1);
+                //     BSH_Algorithm.SetPoint_y(int_y1);
+                // }
+                cgpad.repaint();
+            });
+        }
+
+        public void BSH_Buttons(){
             JTextField x1 = new JTextField();
             JTextField y1 = new JTextField();
             JTextField x2 = new JTextField();
             JTextField y2 = new JTextField();
-            JButton btn;
-            JButton btnClear = new JButton("Clear");
-            JLabel xy1 = new JLabel("    X1   Y1");
-            JLabel xy2 = new JLabel("    X2   Y2");
+            JLabel point1 = new JLabel("Point1");
+            JLabel point2 = new JLabel("Point2");
+            JButton algButton = new JButton("Breseham");
+            JButton clearButton = new JButton("Clear");
 
-            Button_Maker(String name){
-                this.btn = new JButton(name);
+            add(point1);
+            add(x1);
+            add(y1);
+            add(point2);
+            add(x2);
+            add(y2);
+            add(algButton);
+            add(clearButton);
 
-                add(this.xy1);
-                add(this.x1);
-                add(this.y1);
-                add(this.btn);
+            algButton.addActionListener(e ->{
+                int int_x1 = Integer.parseInt(x1.getText());
+                int int_y1 = Integer.parseInt(y1.getText());
+                int int_x2 = Integer.parseInt(x2.getText());
+                int int_y2 = Integer.parseInt(y2.getText());
 
-                add(this.xy2);
-                add(this.x2);
-                add(this.y2);
-                add(this.btnClear);
-            
-                this.btn.addActionListener(e -> {
-                    int x1, x2, y1, y2;
+                BSH_Algorithm = new Bresenham(int_x1, int_y1, int_x2, int_y2);
+                cgpad.repaint();
+            });
 
-                    x1 = Integer.parseInt(this.x1.getText());
-                    x2 = Integer.parseInt(this.x2.getText());
-                    y1 = Integer.parseInt(this.y1.getText());
-                    y2 = Integer.parseInt(this.y2.getText());
-                    Choice_Alg(name, x1, x2, y1, y2);
+            clearButton.addActionListener(e ->{
+                x1.setText("");
+                y1.setText("");
+                x2.setText("");
+                y2.setText("");
 
-                    gpanel.repaint();
-                });
-
-                this.btnClear.addActionListener(e -> {
-                    this.x1.setText("");
-                    this.x2.setText("");
-                    this.y1.setText("");
-                    this.y2.setText("");
-
-                    Choice_Arr(name);
-                    gpanel.repaint();
-
-                    System.out.println("내용 삭제 완료!");
-                });
-            }
-
-            public void Choice_Arr(String name){
-                if(name == "DDA"){
-                    System.out.println("Choice_Arr -> DDA");
-                    DDA_arr.clear();
-                }
-                if(name == "BSH"){
-                    System.out.println("Choice_Arr -> BSH");
-                    BSH_arr.clear();
-                }
-                if(name == "MEA"){
-                    System.out.println("Choice_Arr -> MEA");
-                    MEA_arr.clear();
-                }
-                if(name == "MOVE"){
-                    System.out.println("Choice_Arr -> MOVE");
-                    MEA_arr.clear();
-                    MOVE_arr.clear();
-                }
-                
-            }
-
-            public void Choice_Alg(String name, int x1, int x2, int y1, int y2){
-                if(name == "DDA"){
-                    System.out.println("Choice_Alg -> DDA 알고리즘 호출!");
-                    new Graphics_Alg(x1, y1, x2, y2).DDA_Alg();
-                }
-                if(name == "BSH"){
-                    System.out.println("Choice_Alg -> BSH 알고리즘 호출!");
-                    new Graphics_Alg(x1, y1, x2, y2).BSH_Alg();
-                }
-                if(name == "MEA"){
-                    System.out.println("Choice_Alg -> MEA 알고리즘 호출!");
-                    new Graphics_Alg(x1, y1, x2, y2).MEA_Alg();
-                }
-                if(name == "MOVE"){
-                    System.out.println("Choice_Alg -> MOVE 알고리즘 호출!");
-                    new Graphics_Alg(x1, y1, x2, y2).move();
-                }
-            }
+                BSH_Algorithm.array.clear();
+                cgpad.repaint();
+            });
         }
 
-        class Graphics_Alg{
-            int x1, x2, y1, y2;
-            float m;
-            boolean bigger_one = false;
+        public void DDA_Buttons(){
+            JTextField x1 = new JTextField();
+            JTextField y1 = new JTextField();
+            JTextField x2 = new JTextField();
+            JTextField y2 = new JTextField();
+            JLabel point1 = new JLabel("Point1");
+            JLabel point2 = new JLabel("Point2");
+            JButton algButton = new JButton("DDA");
+            JButton clearButton = new JButton("Clear");
 
-            Graphics_Alg(int x1, int y1, int x2, int y2){
-                this.x1 = x1;
-                this.y1 = y1;
-                this.x2 = x2;
-                this.y2 = y2;
+            add(point1);
+            add(x1);
+            add(y1);
+            add(point2);
+            add(x2);
+            add(y2);
+            add(algButton);
+            add(clearButton);
 
-                reverse();
-                this.m = (float)(this.y2 - this.y1) / (float)(this.x2 - this.x1);
-                System.out.println("m: " + this.m);
-                check_m();
-            }
+            algButton.addActionListener(e ->{
+                int int_x1 = Integer.parseInt(x1.getText());
+                int int_y1 = Integer.parseInt(y1.getText());
+                int int_x2 = Integer.parseInt(x2.getText());
+                int int_y2 = Integer.parseInt(y2.getText());
 
-            // DDA 알고리즘
-            public void DDA_Alg(){
-                System.out.println("DDA 알고리즘 연산 실행!");
-                check_before_Alg();
-                float y = this.y1;
-                int delta = -100;
+                DDA_Algorithm = new DDA(int_x1, int_y1, int_x2, int_y2);
+                cgpad.repaint();
+            });
 
-                for(int x=this.x1; x<=this.x2; x++){
-                    if(delta != -100 && delta == return_int(y)){
-                        check_after_Alg(x, return_int(y), 0, DDA_arr);
-                    }
-                    else{
-                        check_after_Alg(x, return_int(y), 1, DDA_arr);
-                    }
-                    delta = return_int(y);
-                    y += this.m;
-                }
-            }
+            clearButton.addActionListener(e ->{
+                x1.setText("");
+                y1.setText("");
+                x2.setText("");
+                y2.setText("");
 
-            // Bresenham's 알고리즘
-            public void BSH_Alg(){
-                System.out.println("BSH 알고리즘 연산 실행!");
-                int delta;
+                DDA_Algorithm.array.clear();
+                cgpad.repaint();
+            });
+        }
 
-                check_before_Alg();
+        public void MEA_Buttons(){
+            JTextField x1 = new JTextField();
+            JTextField y1 = new JTextField();
+            JTextField radian = new JTextField();
+            JButton algButton = new JButton("MEA");
+            JButton clearButton = new JButton("Clear");
+            JLabel point1 = new JLabel("Point1");
+            JLabel radian1 = new JLabel("radian");
 
-                if(this.m >= 0){
-                    delta = 1;
-                }
-                else{
-                    delta = -1;
-                }
+            add(point1);
+            add(x1);
+            add(y1);
+            add(radian1);
+            add(radian);
+            add(new JLabel());
+            add(algButton);
+            add(clearButton);
 
-                // 이해가 안되네
-                int dx = Math.abs(this.x2 - this.x1);
-                int dy = Math.abs(this.y2 - this.y1);
-                //
+            algButton.addActionListener(e ->{
+                int int_x1 = Integer.parseInt(x1.getText());
+                int int_y1 = Integer.parseInt(y1.getText());
+                int int_radian = Integer.parseInt(radian.getText());
 
-                int y = this.y1;
-                int p = 2 * dy - dx;
-                int before = -100;
+                System.out.println("버튼 로그 - int 파싱 여부 확인");
+                System.out.println(int_x1);
+                System.out.println(int_y1);
+                System.out.println(int_radian);
+                System.out.println("버튼 로고 끝");
 
-                for(int x=this.x1; x<=this.x2; x++){
-                    System.out.println("p: " + p);
+                MEA_Algorithm = new MidPointEllipse(int_x1, int_y1, int_radian);
+                cgpad.repaint();
+            });
 
-                    if(before != -100 && before == y){
-                        check_after_Alg(x, y, 0 ,BSH_arr);
-                    }
-                    else{
-                        check_after_Alg(x, y, 1 ,BSH_arr);
-                    }
+            clearButton.addActionListener(e ->{
+                x1.setText("");
+                y1.setText("");
+                radian.setText("");
 
-                    before = y;
+                MEA_Algorithm.array.clear();
+                cgpad.repaint();
+            });
+        }
+    }
+}
 
-                    if(p >= 0){
-                        p = p + 2 * (dy - dx);
-                        y += delta;
-                    }
-                    else{
-                        p = p + 2 * dy;
-                    }
+// 모든 알고리즘이 출력하는 부분
+class Algorithm extends CGPanel{
+    public ArrayList<xypos> array = new ArrayList<>();
 
-                }
-            }
+    public Algorithm(){
+    }
 
-            // Mid Point Ellipse 알고리즘
-            public void MEA_Alg(){
-                System.out.println("MEA_Alg -> MEA 알고리즘 실행");
-                // x1, y1: 좌표, x2: radian으로 쓸거임
-                int x = 0;
-                int y = x2;
-                int p = 1 - x2;
+    public void move(int dx, int dy){
+        ArrayList<xypos> move_array = new ArrayList<>();
+        for(xypos p : this.array){
+            move_array.add(0, new xypos(p.x + dx, p.y + dy));
+        }
+        array = move_array;
+    }
+    
+    public void print_array(Graphics g){
+        g.setColor(Color.black);
 
-                // 좌표 세이브
-                CirclePlotPoints(x1, y1, x, y);
+        for(xypos point : this.array){
+            boolean inpad = (point.x <= super.numX && point.x >= -super.numX && point.y <= super.numY && point.y >= -super.numY);
 
-                while(x < y){
-                    x++;
-
-                    if(p < 0){
-                        p += 2 * x + 1;
-                    }
-                    else{
-                        y--;
-                        p += 2 * (x - y) + 1;
-                    }
-                    // 좌표 세이브
-                    CirclePlotPoints(x1, y1, x, y);
-                }
-            }
-
-            void CirclePlotPoints(int xCenter, int yCenter, int x, int y){
-                MEA_arr.add(0, new xypos(xCenter + x, yCenter + y, 0));
-                MEA_arr.add(0, new xypos(xCenter - x, yCenter + y, 0));
-                MEA_arr.add(0, new xypos(xCenter + x, yCenter - y, 0));
-                MEA_arr.add(0, new xypos(xCenter - x, yCenter - y, 0));
-                MEA_arr.add(0, new xypos(xCenter + y, yCenter + x, 0));
-                MEA_arr.add(0, new xypos(xCenter - y, yCenter + x, 0));
-                MEA_arr.add(0, new xypos(xCenter + y, yCenter - x, 0));
-                MEA_arr.add(0, new xypos(xCenter - y, yCenter - x, 0));
-            }
-
-            public void move(){
-                // x1, y1 이동될 중점
-                int x1 = this.x1;
-                int y1 = this.x2;
-
-                for(xypos p : MEA_arr){
-                    System.out.println(p.x);
-                    MOVE_arr.add(0, new xypos((p.x + x1), (p.y + y1), 0));
-                }
-            }
-
-            // 시작 전 좌표 수정
-            public void check_before_Alg(){
-                if(this.bigger_one){
-                    int temp;
-                    temp = this.x1;
-                    this.x1 = this.y1;
-                    this.y1 = temp;
-                    
-                    temp = this.x2;
-                    this.x2 = this.y2;
-                    this.y2 = temp;
-                    System.out.println("좌표 재설정!");
-                    System.out.println("x1 : " + x1 + " y1 : " + y1 + " x2 : " + x2 + " y2 : " + y2);
-                    
-                    System.out.println("기울기 재설정!");
-                    this.m = (float)(this.y2 - this.y1) / (float)(this.x2 - this.x1);
-                    System.out.println("재설정된 기울기 m: " + this.m);
-                }
-            }
-
-            // 시작 후 최종 좌표 수정
-            public void check_after_Alg(int x, int y, int change, ArrayList<xypos> array){
-                if(this.bigger_one){
-                    System.out.println("x: " + y + " | " + "y: " + x);
-                    array.add(0, new xypos(y, x, change));
-                }
-                else{
-                    System.out.println("x: " + x + " | " + "y: " + y);
-                    array.add(0, new xypos(x, y, change));
-                }
-            }
-
-            // 기울기에 따른 부호와 1보다 큰지 정해준다.
-            public void check_m(){
-                if(Math.abs(this.m) > 1){
-                    this.bigger_one = true;
-                }
-            }
-
-            // 두 점이 반대로 찍혔을때 수정하기 위한 메소드
-            public void reverse(){
-                if(this.x1 > this.x2){
-                    int temp = this.x1;
-                    this.x1 = this.x2;
-                    this.x2 = temp;
-                    
-                    temp = this.y1;
-                    this.y1 = this.y2;
-                    this.y2 = temp;
-                }
-                this.m = (float)(this.y2 - this.y1) / (float)(this.x2 - this.x1);
-            }
-
-            public int return_int(float value){
-                // 양수일 때와 음수일 때 다르게 처리
-                if(value >= 0){
-                    if(value % 1 > 0.5){
-                        return (int)value + 1;
-                    }
-                    else{
-                        return (int)value;
-                    }
-                }
-                else{
-                    if(value % 1 > 0.5){
-                        return (int)value - 1;
-                    }
-                    else{
-                        return (int)value;
-                    }
-                }
+            if(inpad){
+                System.out.print("그려짐");
+                g.fillRect(point.x * super.pix, -(point.y + 1) * super.pix, super.pix, super.pix);
             }
         }
+    }
+}
+
+class DDA extends Algorithm{
+    public DDA(int xa, int ya, int xb, int yb) {
+        int dx = xb - xa;
+        int dy = yb - ya;
+        int steps;
+        float x = xa;
+        float y = ya;
+        float xIncrement, yIncrement;
+
+        System.out.println("dx, dy value: ");
+        System.out.println(dx);
+        System.out.println(dy);
+        System.out.println("dx, dy value end");
+
+        if(Math.abs(dx) > Math.abs(dy)){
+            steps = Math.abs(dx);
+        }
+        else{
+            steps = Math.abs(dy);
+        }
+
+        xIncrement = dx / (float)steps;
+        yIncrement = dy / (float)steps;
+
+        super.array.add(0, new xypos(round(x), round(y)));
+
+        System.out.print("steps value: ");
+        System.out.println(steps);
+
+        for(int k=0; k<steps; k++){
+            x += xIncrement;
+            y += yIncrement;
+            super.array.add(0, new xypos(round(x), round(y)));
+        }
+    }
+
+    public int round(float a){
+        return (int)(a + 0.5);
+    }
+}
+
+class Bresenham extends Algorithm{
+    // 브레센헴은 애초에 기울기가 1보다 작아야한다.
+    public Bresenham(int xa, int ya, int xb, int yb){
+        boolean change;
+
+        if(Math.abs(xb - xa) < Math.abs(yb - ya)){
+            change = true;
+            int temp = xa;
+            xa = ya;
+            ya = temp;
+
+            temp = xb;
+            xb = yb;
+            yb = temp;
+        }
+        else{
+            change = false;
+        }
+
+        int dx = Math.abs(xa - xb);
+        int dy = Math.abs(ya - yb);
+        int p = 2 * dy - dx;
+        int twoDy = 2 * dy;
+        int twoDyDx = 2 * (dy - dx);
+        int x, y, xEnd, Dy;
+
+        System.out.println("twoDy, twoDyDx values");
+        System.out.println(twoDy);
+        System.out.println(twoDyDx);
+        System.out.println("twoDy, twoDyDx values end");
+
+        if(xa > xb){
+            x = xb;
+            y = yb;
+            xEnd = xa;
+        }
+        else{
+            x = xa;
+            y = ya;
+            xEnd = xb;
+        }
+
+        if(change){
+            super.array.add(0, new xypos(y, x));
+        }
+        else{
+            super.array.add(0, new xypos(x, y));
+        }
+
+        if(ya <= yb){
+            Dy = 1;
+        }
+        else{
+            Dy = -1;
+        }
+
+        while(x < xEnd){
+            x += 1;
+
+            // 증가 그래프, 감소 그래프에 대한 판단이 없어 추가함
+            if(p < 0){
+                p += twoDy;
+            }
+            else{
+                y += Dy;
+                p += twoDyDx;
+            }
+            System.out.println("Breseham cal values");
+            System.out.println(x);
+            System.out.println(y);
+            System.out.println(p);
+            System.out.println("Breseham cal values end");
+
+            if(change){
+                super.array.add(0, new xypos(y, x));
+            }
+            else{
+                super.array.add(0, new xypos(x, y));
+            }
+        }
+    }
+}
+
+class MidPointEllipse extends Algorithm{
+    int x, y, p;
+    int point_x, point_y, radian;
+    
+    public MidPointEllipse(int x1, int y1, int radian) {
+        this.point_x = x1;
+        this.point_y = y1;
+        this.radian = radian;
+
+        this.x = 0;
+        this.y = radian;
+        this.p = 1 - radian;
+        
+        // 좌표 세이브
+        CirclePlotPoints(x1, y1, x, y);
+
+        while(x < y){
+            x++;
+
+            if(p < 0){
+                p += 2 * x + 1;
+            }
+            else{
+                y--;
+                p += 2 * (x - y) + 1;
+            }
+            // 좌표 세이브
+            CirclePlotPoints(x1, y1, x, y);
+        }
+    }
+
+    public int GetPoint_x(){
+        return this.point_x;
+    }
+
+    public int GetPoint_y(){
+        return this.point_y;
+    }
+
+    public int GetRadian(){
+        return this.radian;
+    }
+
+    public void SetPoint_x(int x){
+        this.point_x = x;
+    }
+
+    public void SetPoint_y(int y){
+        this.point_y = y;
+    }
+
+    void CirclePlotPoints(int xCenter, int yCenter, int x, int y){
+        super.array.add(0, new xypos(xCenter + x, yCenter + y));
+        super.array.add(0, new xypos(xCenter - x, yCenter + y));
+        super.array.add(0, new xypos(xCenter + x, yCenter - y));
+        super.array.add(0, new xypos(xCenter - x, yCenter - y));
+        super.array.add(0, new xypos(xCenter + y, yCenter + x));
+        super.array.add(0, new xypos(xCenter - y, yCenter + x));
+        super.array.add(0, new xypos(xCenter + y, yCenter - x));
+        super.array.add(0, new xypos(xCenter - y, yCenter - x));
     }
 }
