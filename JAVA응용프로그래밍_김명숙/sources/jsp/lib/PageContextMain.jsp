@@ -1,4 +1,4 @@
-<%@ page import="Person"%>
+<%@ page import="src.Person"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

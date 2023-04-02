@@ -1,5 +1,3 @@
-package sources;
-
 public class Person {
     private String name;  // private 멤버 변수(규약 2번)
     private int age;      // private 멤버 변수(규약 2번)
