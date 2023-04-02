@@ -328,6 +328,9 @@ class Algorithm extends CGPanel{
     }
 }
 
+class SamGak extends Algorithm{
+}
+
 class DDA extends Algorithm{
     public DDA(int xa, int ya, int xb, int yb) {
         int dx = xb - xa;
