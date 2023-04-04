@@ -25,6 +25,7 @@ public class CGPanel extends JPanel{
     MidPointEllipse MEA_Algorithm;
     DDA DDA_Algorithm;
     Bresenham BSH_Algorithm;
+    SamGak SAM_Algorithm;
 
     CGPanel(){
         cgpad = new CGPad();
@@ -91,6 +92,16 @@ public class CGPanel extends JPanel{
                     }
                 }
             }
+
+            if(SAM_Algorithm != null){
+                for(xypos point : SAM_Algorithm.array){
+                    boolean inpad = (point.x <= numX && point.x >= -numX && point.y <= numY && point.y >= -numY);
+
+                    if(inpad){
+                        g.fillRect(point.x * pix, -(point.y + 1) * pix, pix, pix);
+                    }
+                }
+            }
         }
     }
 
@@ -98,7 +109,7 @@ public class CGPanel extends JPanel{
         CGButton(){
             setPreferredSize(new Dimension(800, 400));
             // row, cols, gaps -> 칸이 적을경우 rows를 우선적으로 지킴
-            setLayout(new GridLayout(5, 8, 2, 2));
+            setLayout(new GridLayout(6, 8, 2, 2));
             
             System.out.println("CGButton() 체크");
 
@@ -107,6 +118,51 @@ public class CGPanel extends JPanel{
             BSH_Buttons();
             MOVE_Buttons();
             ZIZO_Buttons();
+            SamGak_Buttons();
+        }
+
+        public void SamGak_Buttons(){
+            JTextField x1 = new JTextField();
+            JTextField y1 = new JTextField();
+            JTextField x2 = new JTextField();
+            JTextField y2 = new JTextField();
+            JTextField x3 = new JTextField();
+            JTextField y3 = new JTextField();
+            JButton algButton = new JButton("SamGak");
+            JButton clearButton = new JButton("Clear");
+
+            add(x1);
+            add(y1);
+            add(x2);
+            add(y2);
+            add(x3);
+            add(y3);
+            add(algButton);
+            add(clearButton);
+
+            algButton.addActionListener(e ->{
+                int int_x1 = Integer.parseInt(x1.getText());
+                int int_y1 = Integer.parseInt(y1.getText());
+                int int_x2 = Integer.parseInt(x2.getText());
+                int int_y2 = Integer.parseInt(y2.getText());
+                int int_x3 = Integer.parseInt(x3.getText());
+                int int_y3 = Integer.parseInt(y3.getText());
+
+                SAM_Algorithm = new SamGak(int_x1, int_y1, int_x2, int_y2, int_x3, int_y3);
+                cgpad.repaint();
+            });
+
+            clearButton.addActionListener(e ->{
+                x1.setText("");
+                y1.setText("");
+                x2.setText("");
+                y2.setText("");
+                x3.setText("");
+                y3.setText("");
+
+                SAM_Algorithm.array.clear();
+                cgpad.repaint();
+            });
         }
 
         public void ZIZO_Buttons(){
@@ -160,16 +216,9 @@ public class CGPanel extends JPanel{
                     MEA_Algorithm.move(int_x1, int_y1);
                 }
 
-                // if(DDA_Algorithm != null && DDA_Algorithm.array.size() != 0){
-                //     DDA_Algorithm.move(int_x1, int_y1);
-                //     DDA_Algorithm.SetPoint_x(int_x1);
-                //     DDA_Algorithm.SetPoint_y(int_y1);
-                // }
-                // if(BSH_Algorithm != null && BSH_Algorithm.array.size() != 0){
-                //     BSH_Algorithm.move(int_x1, int_y1);
-                //     BSH_Algorithm.SetPoint_x(int_x1);
-                //     BSH_Algorithm.SetPoint_y(int_y1);
-                // }
+                if(SAM_Algorithm != null && SAM_Algorithm.array.size() != 0){
+                    SAM_Algorithm.move(int_x1, int_y1);
+                }
                 cgpad.repaint();
             });
         }
@@ -329,6 +378,50 @@ class Algorithm extends CGPanel{
 }
 
 class SamGak extends Algorithm{
+    SamGak(int xa, int ya, int xb, int yb, int xc, int yc){
+        DDA(xa, ya, xb, yb);
+        DDA(xb, yb, xc, yc);
+        DDA(xc, yc, xa, ya);
+    }
+
+    public void DDA(int xa, int ya, int xb, int yb) {
+        int dx = xb - xa;
+        int dy = yb - ya;
+        int steps;
+        float x = xa;
+        float y = ya;
+        float xIncrement, yIncrement;
+
+        System.out.println("dx, dy value: ");
+        System.out.println(dx);
+        System.out.println(dy);
+        System.out.println("dx, dy value end");
+
+        if(Math.abs(dx) > Math.abs(dy)){
+            steps = Math.abs(dx);
+        }
+        else{
+            steps = Math.abs(dy);
+        }
+
+        xIncrement = dx / (float)steps;
+        yIncrement = dy / (float)steps;
+
+        super.array.add(0, new xypos(round(x), round(y)));
+
+        System.out.print("steps value: ");
+        System.out.println(steps);
+
+        for(int k=0; k<steps; k++){
+            x += xIncrement;
+            y += yIncrement;
+            super.array.add(0, new xypos(round(x), round(y)));
+        }
+    }
+
+    public int round(float a){
+        return (int)(a + 0.5);
+    }
 }
 
 class DDA extends Algorithm{

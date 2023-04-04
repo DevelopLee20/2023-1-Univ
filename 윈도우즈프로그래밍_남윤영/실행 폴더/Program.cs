@@ -1,107 +1,104 @@
-﻿// // 문제 1
-// int a, b, c;
+﻿// // 1번 문제
 
-// Console.Write("a를 입력하세요 : ");
-// a = Int32.Parse(Console.ReadLine());
-// Console.Write("b를 입력하세요 : ");
-// b = Int32.Parse(Console.ReadLine());
-// Console.Write("c를 입력하세요 : ");
-// c = Int32.Parse(Console.ReadLine());
+// Console.Write("단을 입력하세요 : ");
+// int num = Convert.ToInt32(Console.ReadLine());
+// String [] array = new String[9];
 
-// double answer1 = (-b + Math.Sqrt(b*b - 4*a*c)) / 2*a;
-// double answer2 = (-b - Math.Sqrt(b*b - 4*a*c)) / 2*a;
-
-// if ((Math.Sqrt(b*b - 4*a*c)) > 0){
-//     Console.WriteLine("첫 번째 근은 " + answer1 + "이고, 두 번째 근은" + answer2 + "입니다.");
-// }
-// else if((Math.Sqrt(b*b - 4*a*c)) < 0){
-//     Console.WriteLine("허근입니다.");
-// }
-// else{
-//     Console.WriteLine("첫 번째 근은 " + answer1);
+// for(int i=1; i<=9; i++){
+//     String temp = num + " * " + i + " = " + num * i;
+//     array[i-1] = temp;
 // }
 
-// // 문제 2
-// for(int i=9; i>=1; i--){
-//     int num1 = 0;
-//     int temp = 1;
-
-//     for(int j=1; j<=i; j++){
-//         temp *= j;
-
-//         Console.Write(j);
-        
-//         if(j != i){
-//             Console.Write("*");
-//         }
-//         j = j + 1;
-//     }
-//     num1 += temp;
-//     Console.WriteLine(" " + num1);
-
-//     i = i - 1;
-// }
-// Console.WriteLine();
-
-// double num2 = 0;
-// for(int i=1; i<=5; i++){
-//     double output = 1.0 / (double)(i*2);
-//     Console.WriteLine("1 / " + i*2 + " = " + output);
-//     if(i % 2 == 1){
-//         num2 = num2 + output;
-//     }
-//     else{
-//         num2 = num2 - output;
-//     }
-// }
-// Console.WriteLine("최종값: " + num2);
-
-// // 문제 3
-// for(int num=9; num>=1; num--){
-//     if(num != 9){
-//         for(int i=0; i<9-num; i++){
-//             Console.Write(" ");
-//         }
-//     }
-
-//     for(int i=num; i>=1; i--){
-//         Console.Write(i);
-//     }
-//     for(int i=2; i<=num; i++){
-//         Console.Write(i);
-//     }
-//     Console.WriteLine();
+// foreach (String item in array){
+//     Console.WriteLine(item);
 // }
 
-// // 문제 4
-// int outcount = 4;
-// int delta = -1;
-// for(int i=0; i<7; i++){
-//     for(int j=0; j<outcount; j++){
-//         Console.Write("*");
+// // 2번 문제
+// String[] str = {"computer","science","ENGINEERING","android","VISUALSTUDIO"};
+
+// Console.Write("검색할 단어를 입력하세요 : ");
+// String word = Console.ReadLine();
+// Boolean NoneOut = true;
+
+// foreach(String item in str){
+//     if(item.ToUpper() == word.ToUpper()){
+//         Console.WriteLine("검색한 단어 " + word + "(이)가 배열에 있습니다.");
+//         NoneOut = false;
 //     }
-//     for(int j=0; j<9-2*outcount; j++){
-//         Console.Write(" ");
-//     }
-//     for(int j=0; j<outcount; j++){
-//         Console.Write("*");
-//     }
-//     if(outcount == 1){
-//         delta = 1;
-//     }
-//     outcount += delta;
-//     Console.WriteLine();
 // }
 
-// // 문제 5
-// int num = 1;
-
-// for(int i=0; i<=3; i++){
-//     for(int q=1; q<=9; q++){
-//         for(int p=num; p<=num+i; p++){
-//             Console.Write(p + " * " + q + " = " + (p * q).ToString().PadRight(6, ' '));
-//         }
-//     Console.WriteLine();
-//     }
-//     num = num + i + 1;
+// if(NoneOut){
+//     Console.WriteLine("검색한 단어 " + word + "(이)가 배열에 없습니다.");
 // }
+
+// 3번 문제
+String[,] library = new String[10,2];
+Boolean NoExits = true;
+int count = 0;
+
+do
+{
+    Console.WriteLine("************************************************************");
+    Console.WriteLine("1 : 도서 추가, 2 : 도서 검색, 3 : 도서 리스트 출력, 0 : 종료");
+    Console.WriteLine("************************************************************");
+    int switch_on = Convert.ToInt32(Console.ReadLine());
+
+    switch (switch_on){
+        case 1:
+            Console.WriteLine();
+            if(count != 10){
+                Console.WriteLine("입력할 도서(책이름, 저자)를 입력하세오. 최대 10개 입력 가능 : ex) 저자명,도서명");
+                String[] input = Console.ReadLine().Split(",");
+                library[count,0] = input[0];
+                library[count,1] = input[1];
+                count += 1;
+            }
+            else{
+                Console.WriteLine("수용가능한 도서(10개)를 초과했습니다!");
+            }
+            Console.WriteLine();
+            break;
+
+        case 2:
+            Console.WriteLine();
+            Console.WriteLine("찾고자 하는 도서의 이름이나 저자의 이름을 입력하시오");
+            String input2 = Console.ReadLine();
+            Boolean NoBook = true;
+
+            for(int i=0; i<count; i++){
+                for(int j=0; j<2; j++){
+                    if(library[i,j] == input2){
+                        Console.WriteLine("찾고자 하는 도서가 존재함");
+                        Console.Write(library[i,0] + " ");
+                        Console.WriteLine(library[i,1]);
+                        NoBook = false;
+                    }
+                }
+            }
+
+            if(NoBook){
+                Console.WriteLine("찾고자 하는 도서가 존재하지 않음");
+            }
+            Console.WriteLine();
+            break;
+
+        case 3:
+            Console.WriteLine();
+            Console.WriteLine("전체 도서 목록");
+            Console.WriteLine(count);
+            for(int i=0; i<count; i++){
+                Console.Write(i+1 + " : ");
+                Console.Write(library[i,0] + " ");
+                Console.WriteLine(library[i,1]);
+            }
+            Console.WriteLine();
+            break;
+
+        case 0:
+            NoExits = false;
+            break;
+    }
+
+} while (NoExits);
+
+Console.WriteLine("종료");
