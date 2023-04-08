@@ -8,6 +8,7 @@ public class CGMain extends JFrame{
         setTitle("CGBoard");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+
     }
 
     public static void main(String[] args) {
