@@ -1,0 +1,6 @@
+{
+    "C_Cpp.errorSquiggles": "disabled",
+    "files.associations": {
+        "#1 다중트랜젝션.C": "cpp"
+    }
+}

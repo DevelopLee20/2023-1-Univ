@@ -220,7 +220,7 @@ public class CGPanel extends JPanel{
 
             for(int j=0; j<3; j++){
                 for(int k=0; k<3; k++){
-                    result[j] += mat1[k] * mat2[k][j];
+                    result[j] += round(mat1[k] * mat2[k][j]);
                 }
             }
             return result;
@@ -262,9 +262,9 @@ public class CGPanel extends JPanel{
                 {0, 1, 0},
                 {-x, -y, 1}
             };
-            int[][] rotation = {
-                {round(Math.cos(seta)), round(Math.sin(seta)), 0},
-                {-round(Math.sin(seta)), round(Math.cos(seta)), 0},
+            double[][] rotation = {
+                {Math.cos(seta), Math.sin(seta), 0},
+                {-Math.sin(seta), Math.cos(seta), 0},
                 {0, 0, 1}
             };
             int[][] move2 = {
