@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dldls\\OneDrive\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\소스 코드.csproj",
+      "projectUniqueName": "C:\\Users\\dldls\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\소스 코드.csproj",
       "projectName": "소스 코드",
-      "projectPath": "C:\\Users\\dldls\\OneDrive\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\소스 코드.csproj",
+      "projectPath": "C:\\Users\\dldls\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\소스 코드.csproj",
       "packagesPath": "C:\\Users\\dldls\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dldls\\OneDrive\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\obj\\",
+      "outputPath": "C:\\Users\\dldls\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\dldls\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -59,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }
