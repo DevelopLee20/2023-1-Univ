@@ -12,6 +12,7 @@ public class CGPanel extends JPanel{
     private final int sizeY = numY*pix; // 모눈종이 y축 크기
     public ArrayList<xypos> arr;
     public ArrayList<xypos> click_arr;
+    public ArrayList<xypos> point_arr;
     private panel_graph gpanel;
     private panel_control gcontrol;
     public xypos mid_point;
@@ -205,24 +206,32 @@ public class CGPanel extends JPanel{
 
     class MATRIX{
         public int[] Mat_cal(int[] mat1, int[][] mat2){
-            int[] result = new int[3];
+            int[] result = {0, 0, 0};
 
             for(int j=0; j<3; j++){
                 for(int k=0; k<3; k++){
-                    result[j] += mat1[k] * mat2[k][j];
+                    result[j] += (mat1[k] * mat2[k][j]);
                 }
             }
             return result;
         }
 
+        // Overloading
         public int[] Mat_cal(int[] mat1, double[][] mat2){
-            int[] result = new int[3];
+            int[] result = {0, 0, 0};
 
             for(int j=0; j<3; j++){
+                double temp = 0;
                 for(int k=0; k<3; k++){
-                    result[j] += round(mat1[k] * mat2[k][j]);
+                    temp = temp + (mat1[k] * mat2[k][j]);
                 }
+                result[j] = round(temp);
             }
+
+            for(int i=0; i<3; i++){
+                System.out.print(result[i]+ " ");
+            }
+            System.out.println();
             return result;
         }
 
@@ -254,38 +263,35 @@ public class CGPanel extends JPanel{
         }
 
         public void Mat_rotation(double seta){
-            int x = mid_point.x;
-            int y = mid_point.y;
+            int mx = mid_point.x;
+            int my = mid_point.y;
+            double rad = seta * (3.141592 / 180);
+            double mcos = Math.cos(rad);
+            double msin = Math.sin(rad);
 
-            int[][] move1 = {
-                {1, 0, 0},
-                {0, 1, 0},
-                {-x, -y, 1}
-            };
+            System.out.println("Mat rotation log");
+            System.out.println(mx);
+            System.out.println(my);
+            System.out.println(rad);
+            System.out.println(mcos);
+            System.out.println(msin);
+            System.out.println("Mat rotation log end");
+
             double[][] rotation = {
-                {Math.cos(seta), Math.sin(seta), 0},
-                {-Math.sin(seta), Math.cos(seta), 0},
-                {0, 0, 1}
-            };
-            int[][] move2 = {
-                {1, 0, 0},
-                {0, 1, 0},
-                {x, y, 1}
+                {mcos, msin, 0},
+                {-msin, mcos, 0},
+                {(1-mcos)*mx + my*msin, (1-mcos)*my - mx*msin, 1}
             };
 
             ArrayList<xypos> temp = new ArrayList<>();
 
-            for(xypos p : arr){
+            for(xypos p : click_arr){
                 int[] mat = {p.x, p.y, 1};
-                int[] result = Mat_cal(mat, move1);
-                result = Mat_cal(result, rotation);
-                result = Mat_cal(result, move2);
+                int[] result = Mat_cal(mat, rotation);
 
                 temp.add(0, new xypos(result[0], result[1]));
-                System.out.println("Mat_cal(mat, move)");
-                Mat_print(result);
             }
-            arr = temp;
+            point_arr = temp;
         }
 
         public void Mat_arbitray_scale(int a){
@@ -293,7 +299,7 @@ public class CGPanel extends JPanel{
         }
 
         public int round(double a){
-            return (int)(a + 0.5);
+            return (int)(a + 0.9999);
         }
     }
 
@@ -381,20 +387,20 @@ public class CGPanel extends JPanel{
             g2.drawLine(0, -sizeY, 0, sizeY);
 
             // 그림 그리기
+            System.out.println("그림그리기 arr");
             for(xypos p : arr){
-                System.out.println("그림그리기");
                 g2.fillRect(p.x*pix, -(p.y+1)*pix, pix, pix);   // 네모는 왼쪽위에서 아래로 그림
             }
 
+            System.out.println("그림그리기 click_arr");
             for(xypos p : click_arr){
-                System.out.println("그림그리기");
                 g2.fillRect(p.x*pix, -(p.y+1)*pix, pix, pix);
             }
 
             gcontrol.DDA_Button.setEnabled(click_arr.size() == 2);
             gcontrol.BSH_Button.setEnabled(click_arr.size() == 2);
             gcontrol.MEA_Button.setEnabled(click_arr.size() == 1 && !gcontrol.MEA_radian.getText().isEmpty());
-            gcontrol.SAM_Button.setEnabled(click_arr.size() == 3);
+            gcontrol.SAM_Button.setEnabled(click_arr.size() >= 3);
             gcontrol.MOVE_Button.setEnabled(arr.size() != 0 && !gcontrol.MOVE_pointx.getText().isEmpty() && !gcontrol.MOVE_pointy.getText().isEmpty());
             gcontrol.ROTATO_Button.setEnabled(arr.size() != 0 && !gcontrol.Rotate_seta.getText().isEmpty());
         }
@@ -404,7 +410,7 @@ public class CGPanel extends JPanel{
         JButton DDA_Button = new JButton("DDA");
         JButton BSH_Button = new JButton("BSH");
         JButton MEA_Button = new JButton("MEA");
-        JButton SAM_Button = new JButton("삼각형");
+        JButton SAM_Button = new JButton("POLYGON");
         JButton clear_Button = new JButton("Clear");
         JButton MOVE_Button = new JButton("MOVE");
         JButton ROTATO_Button = new JButton("ROTATO");
@@ -437,7 +443,20 @@ public class CGPanel extends JPanel{
             add(clear_Button);
 
             ROTATO_Button.addActionListener(e->{
+                System.out.println("check");
+                System.out.println(mid_point.x);
+                System.out.println(mid_point.y);
                 new MATRIX().Mat_rotation(Integer.parseInt(Rotate_seta.getText()));
+
+                mid_point = click_arr.get(3);
+                
+                arr.clear();
+                click_arr.clear();
+
+
+                for(int i=1; i<=point_arr.size(); i++){
+                    new DDA(point_arr.get(i-1).x, point_arr.get(i-1).y, point_arr.get(i % point_arr.size()).x, point_arr.get(i % point_arr.size()).y);
+                }
                 gpanel.repaint();
             });
 
@@ -485,10 +504,15 @@ public class CGPanel extends JPanel{
             SAM_Button.addActionListener(e->{
                 System.out.println("SAM Button 실행");
 
-                new SAM(click_arr.get(2).x, click_arr.get(2).y, click_arr.get(1).x, click_arr.get(1).y, click_arr.get(0).x, click_arr.get(0).y);
-                mid_point = new xypos(click_arr.get(0).x, click_arr.get(0).y);
+                for(int i=1; i<=click_arr.size(); i++){
+                    new DDA(click_arr.get(i-1).x, click_arr.get(i-1).y, click_arr.get(i % click_arr.size()).x, click_arr.get(i % click_arr.size()).y);
+                }
+                // new SAM(click_arr.get(2).x, click_arr.get(2).y, click_arr.get(1).x, click_arr.get(1).y, click_arr.get(0).x, click_arr.get(0).y);
+                mid_point = new xypos(click_arr.get(2).x, click_arr.get(2).y);
+                System.out.println("소고기 먹고싶다.");
+                System.out.println(mid_point.x + " " + mid_point.y);
 
-                click_arr.clear();
+                // click_arr.clear();
                 gpanel.repaint();
             });
 
