@@ -1,7 +1,6 @@
 import javax.swing.*;
 
 public class CGMain extends JFrame{
-
     public CGMain() {
         add(new CGPanel());
         pack();

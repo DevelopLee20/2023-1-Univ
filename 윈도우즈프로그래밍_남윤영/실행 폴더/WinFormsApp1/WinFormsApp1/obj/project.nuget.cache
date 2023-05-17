@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "ash7A1lRsX34brw5MP/kyNvfMg85gJlHo/9JjJf8BJ0bjQTpnwSbpMV0mKIH81ueUnTBRIHmD5N1bW0S58MJDw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dldls\\OneDrive\\바탕 화면\\2023-1-Univ\\윈도우즈프로그래밍_남윤영\\실행 폴더\\WinFormsApp1\\WinFormsApp1\\WinFormsApp1.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dldls\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.14\\microsoft.windowsdesktop.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\dldls\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.14\\microsoft.netcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\dldls\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.14\\microsoft.aspnetcore.app.ref.6.0.14.nupkg.sha512",
+    "C:\\Users\\dldls\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.14\\microsoft.netcore.app.host.win-x64.6.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}

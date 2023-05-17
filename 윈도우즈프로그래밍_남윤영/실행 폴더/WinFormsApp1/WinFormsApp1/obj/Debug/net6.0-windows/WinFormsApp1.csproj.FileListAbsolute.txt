@@ -1,0 +1,17 @@
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\bin\Debug\net6.0-windows\WinFormsApp1.exe
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\bin\Debug\net6.0-windows\WinFormsApp1.deps.json
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\bin\Debug\net6.0-windows\WinFormsApp1.runtimeconfig.json
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\bin\Debug\net6.0-windows\WinFormsApp1.dll
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\bin\Debug\net6.0-windows\WinFormsApp1.pdb
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.csproj.AssemblyReference.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.Form1.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.csproj.GenerateResource.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.AssemblyInfoInputs.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.AssemblyInfo.cs
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.dll
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\refint\WinFormsApp1.dll
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.pdb
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\WinFormsApp1.genruntimeconfig.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\실행 폴더\WinFormsApp1\WinFormsApp1\obj\Debug\net6.0-windows\ref\WinFormsApp1.dll
