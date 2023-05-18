@@ -1,3 +1,4 @@
+import javax.net.ssl.X509TrustManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -14,14 +15,19 @@ public class CGPanel extends JPanel{
     public ArrayList<xypos> point_arr;
     public ArrayList<xypos> show_arr;
     public ArrayList<xypos> window_arr;
+    ArrayList<xypos> new_point;
     public xypos winMin;
     public xypos winMax;
     public boolean point_show = true;
+    public boolean window_show = true;
+    double Xrate;
+    double Yrate;
 
     CGPanel() {
         point_arr = new ArrayList<>();
         show_arr = new ArrayList<>();
         window_arr = new ArrayList<>();
+        new_point = new ArrayList<>();
 
         setLayout(new FlowLayout());
         gpanel = new panel_graph();
@@ -76,6 +82,57 @@ public class CGPanel extends JPanel{
                 x += xIncrement;
                 y += yIncrement;
                 window_arr.add(0, new xypos(round(x), round(y)));
+            }
+        }
+    
+        public int round(float a){
+            return (int)(a + 0.5);
+        }
+    }
+
+    class ViewPort{
+        public ViewPort(ArrayList<xypos> arrss){
+            show_arr.clear();
+
+            for(xypos p : arrss){
+                System.out.println("arrss: " + p.x + " " + p.y);
+            }
+
+            for(int i=0; i<arrss.size(); i++){
+                int xa = arrss.get(i).x;
+                int ya = arrss.get(i).y;
+                int xb = arrss.get((i+1) % arrss.size()).x;
+                int yb = arrss.get((i+1) % arrss.size()).y;
+                if(xa != xb && ya != yb){
+                    DDA(xa, ya, xb, yb);
+                }
+            }
+        }
+
+        public void DDA(int xa, int ya, int xb, int yb) {
+            int dx = xb - xa;
+            int dy = yb - ya;
+            int steps;
+            float x = xa;
+            float y = ya;
+            float xIncrement, yIncrement;
+    
+            if(Math.abs(dx) > Math.abs(dy)){
+                steps = Math.abs(dx);
+            }
+            else{
+                steps = Math.abs(dy);
+            }
+    
+            xIncrement = dx / (float)steps;
+            yIncrement = dy / (float)steps;
+    
+            show_arr.add(0, new xypos(round(x), round(y)));
+    
+            for(int k=0; k<steps; k++){
+                x += xIncrement;
+                y += yIncrement;
+                show_arr.add(0, new xypos(round(x), round(y)));
             }
         }
     
@@ -158,8 +215,10 @@ public class CGPanel extends JPanel{
             g2.drawLine(-sizeX, 0, sizeX, 0);
             g2.drawLine(0, -sizeY, 0, sizeY);
 
+            System.out.println("show_arr");
             for(xypos p : show_arr){
                 g2.fillRect(p.x*pix, -(p.y+1)*pix, pix, pix);
+                System.out.println(p.x + " " + p.y);
             }
             
             if (point_show) {
@@ -169,8 +228,10 @@ public class CGPanel extends JPanel{
             }
 
             g2.setColor(Color.BLUE);
-            for(xypos p : window_arr){
-                g2.fillRect(p.x*pix, -(p.y+1)*pix, pix, pix);
+            if(window_show){
+                for(xypos p : window_arr){
+                    g2.fillRect(p.x*pix, -(p.y+1)*pix, pix, pix);
+                }
             }
         }
     }
@@ -179,6 +240,7 @@ public class CGPanel extends JPanel{
         JButton windowButton = new JButton("Window");
         JButton polyButton = new JButton("POLY");
         JButton clippiButton = new JButton("CLIP");
+        JButton viewporButton = new JButton("VP Map");
         JButton clearButton = new JButton("Clear");
 
         panel_control(){
@@ -188,11 +250,32 @@ public class CGPanel extends JPanel{
             add(windowButton);
             add(polyButton);
             add(clippiButton);
+            add(viewporButton);
             add(clearButton);
 
+            viewporButton.addActionListener(e->{
+                ArrayList<xypos> temp_arr = new ArrayList<>();
+
+                window_show = false;
+                for(xypos p : new_point){
+                    System.out.println("p: " + p.x + " " + p.y);
+                    System.out.println("Xrate: " + Xrate + " " + Yrate);
+                    System.out.println("new points: " + p.x * (int)Xrate + " " + p.y * (int)Yrate);
+                    
+                    int px = p.x * ((int)Xrate+2);
+                    int py = p.y * ((int)Yrate+2);
+
+                    temp_arr.add(temp_arr.size(), new xypos(px, py));
+                }
+
+                new ViewPort(temp_arr);
+
+                gpanel.repaint();
+            });
+
             clippiButton.addActionListener(e->{
-                int Xrate = (60 / ((30+winMax.x)-(30+winMin.x)));
-                int Yrate = (60 / ((30+winMax.y)-(30+winMin.y)));
+                Xrate = (60 / (double)((30+winMax.x)-(30+winMin.x)));
+                Yrate = (60 / (double)((30+winMax.y)-(30+winMin.y)));
 
                 System.out.println(Xrate + " " + Yrate);
             });
@@ -211,6 +294,17 @@ public class CGPanel extends JPanel{
             clippiButton.addActionListener(e->{
                 ArrayList<xypos> temp_arr = new ArrayList<>();
 
+                for(int i=point_arr.size()-1; i>=2; i--){
+                    boolean xCheck = (point_arr.get(i).x < winMax.x && point_arr.get(i).x > winMin.x);
+                    boolean yCheck = (point_arr.get(i).y < winMax.y && point_arr.get(i).y > winMin.y);
+                    boolean check = xCheck && yCheck;
+
+                    if (check) {
+                        new_point.add(new_point.size(), point_arr.get(i));
+                    }
+
+                }
+
                 for(xypos p : show_arr){
                     boolean xCheck = (p.x < winMax.x && p.x > winMin.x);
                     boolean yCheck = (p.y < winMax.y && p.y > winMin.y);
@@ -218,6 +312,12 @@ public class CGPanel extends JPanel{
 
                     if (check) {
                         temp_arr.add(0, new xypos(p.x, p.y));
+                    }
+
+                    for(xypos wp : window_arr){
+                        if(wp.x == p.x && wp.y == p.y){
+                            new_point.add(new_point.size(), new xypos(p.x, p.y));
+                        }
                     }
                 }
                 show_arr = temp_arr;
