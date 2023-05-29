@@ -1,0 +1,51 @@
+메인 (Form1.cs)
+link_facebook - 페이스북
+link_youtube - 유튜브
+link_instagram - 인스타그램
+link_membership - 멤버십
+link_help - 고객센터
+link_question - 단체관람/대관문의
+link_login - 로그인
+link_pre - 예매 (예매화면으로 이동)
+link_movie - 영화
+link_locate - 영화관
+link_event - 이벤트
+link_store - 스토어
+link_new - 회원가입 (회원가입 화면으로 이동)
+link_now_pre - 바로 예매
+
+회원가입 화면 (New.cs)
+label_1 - 회원가입 창
+UserName - 이름 (UserNameBox)
+ID - 아이디 (IDBox)
+PW - 비밀번호 (PWBox)
+Add - 가입 (가입시 닉네임과 아이디 중복 확인)
+Clear - 취소 (원래 페이지로 돌아감 - 팝업창 출력)
+
+예약 화면 (Reserve.cs)
+- tab_time(01 상영시간)
+list_locate - 지역 선택
+list_si - 영화관 선택
+list_movie - 영화명 선택
+list_date - 영화 날짜 선택
+list_time - 영화 시간 선택
+- tab_sit(02 인원/좌석)
+- tab_wallet(03 결제)
+- tab_end(04 결제완료)
+MovieList.txt -> form : locate;si;movie;time;theater;maxsit;nowsit;date
+
+로그인 화면 (login.cs)
+log_id (아이디)
+log_pw (비밀번호)
+login_btn (로그인)
+Clear_1 (취소)
+log_id_box : 아이디 box
+log_pw_box : 비밀번호 box
+
+유저 정보 (UserInfo.txt)
+columns : UserName, ID, PW, UserCode
+form : UserName;ID;PW;UserCode
+
+예약 정보 (Reservation.txt)
+columns : UserCode, MovieCode, NumberCode, SeatCode
+form : UserCode;MovieCode;NumberCode;SeatCode[]
