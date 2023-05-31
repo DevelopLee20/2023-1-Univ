@@ -29,8 +29,11 @@ list_si - 영화관 선택
 list_movie - 영화명 선택
 list_date - 영화 날짜 선택
 list_time - 영화 시간 선택
+button_next - 좌석 선택하기
 - tab_sit(02 인원/좌석)
 - tab_wallet(03 결제)
+last_output - 마지막 결제전 정보 안내
+shot - 결제하기
 - tab_end(04 결제완료)
 MovieList.txt -> form : locate;si;movie;time;theater;maxsit;nowsit;date
 

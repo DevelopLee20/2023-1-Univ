@@ -162,5 +162,35 @@ namespace TermProject
                 }
             }
         }
+
+        private void button_next_Click(object sender, EventArgs e)
+        {
+            // 4개의 값이 모두 있으때 다음 블록으로 이동
+        }
+
+        private void shot_Click(object sender, EventArgs e)
+        {
+            // 다음 단계(4단계 결제완료) 창으로 이동
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
