@@ -1,0 +1,14 @@
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\bin\Debug\Term.exe.config
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\bin\Debug\Term.exe
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\bin\Debug\Term.pdb
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.csproj.AssemblyReference.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.csproj.SuggestedBindingRedirects.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.Form1.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.Login.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.Properties.Resources.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.ReserveShow.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.Search.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.csproj.GenerateResource.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.csproj.CoreCompileInputs.cache
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.exe
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.pdb

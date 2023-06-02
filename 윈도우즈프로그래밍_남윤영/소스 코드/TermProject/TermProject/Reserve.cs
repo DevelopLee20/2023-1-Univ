@@ -18,11 +18,28 @@ namespace TermProject
         MovieForm[] movies = new MovieForm[500];
         int movie_idx = 0;
 
+        Button[,] btns = new Button[10,10];
+        int margin = 0;
+        int width = 15;
+        int height = 15;
+
         public Reserve()
         {
             InitializeComponent();
             try
             {
+                for(int i= 0; i < 10; i++)
+                {
+                    for(int j=0; j < 10; j++)
+                    {
+                        btns[i,j] = new Button();
+                        btns[i,j].Size = new Size(width, height);
+                        btns[i,j].Location= new Point(160+(i*width),90+(j*height));
+                        char alpha = Convert.ToChar((65 + i).ToString());
+                        btns[i,j].Text = alpha.ToString() + (j+1).ToString();
+                    }
+                }
+
                 userinfo = new StreamReader("../../MovieList.txt");
 
                 String line = userinfo.ReadLine();
@@ -155,7 +172,7 @@ namespace TermProject
                         int p_nowSit = movies[i].nowSit;
                         int p_maxSit = movies[i].maxSit;
 
-                        String output = p_theater + "관 " + p_time + " 좌석:" + p_nowSit + "/" + p_maxSit;
+                        String output = p_theater + "관 " + p_time + " 좌석;" + p_nowSit + "/" + p_maxSit;
 
                         list_time.Items.Add(output);
                     }
@@ -165,7 +182,44 @@ namespace TermProject
 
         private void button_next_Click(object sender, EventArgs e)
         {
-            // 4개의 값이 모두 있으때 다음 블록으로 이동
+            String locate, si, movie, date, time;
+
+            if (list_locate.SelectedItem != null && list_si.SelectedItem != null && list_movie.SelectedItem != null && list_date.SelectedItem != null && list_time.SelectedItem != null)
+            {
+                locate = list_locate.SelectedItem.ToString();
+                si = list_si.SelectedItem.ToString();
+                movie = list_movie.SelectedItem.ToString();
+                date = list_date.SelectedItem.ToString();
+                time = list_time.SelectedItem.ToString();
+
+                int number = Int32.Parse(time.Split(';')[1].Split('/')[0]);
+
+                Console.WriteLine(number);
+
+                Random random = new Random();
+                List<int> list = new List<int>();
+
+                for(int i=0; i<number; i++)
+                {
+                    int randoms = random.Next(100);
+
+                    if (!list.Contains(randoms))
+                    {
+                        list.Add(randoms);
+                    }
+                }
+
+                if (list.Contains(0))
+                {
+
+                }
+
+                tab.SelectedTab = tab.TabPages[1];
+            }
+            else
+            {
+                // 메시지 박스 생성 (모든게 선택되지 않았습니다!)
+            }
         }
 
         private void shot_Click(object sender, EventArgs e)
