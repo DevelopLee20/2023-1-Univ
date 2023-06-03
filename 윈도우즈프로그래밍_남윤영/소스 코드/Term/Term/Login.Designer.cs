@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.dkdlel = new System.Windows.Forms.TextBox();
+            this.qlalfqjsgh = new System.Windows.Forms.TextBox();
+            this.wjsghkqjsgh = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -38,26 +38,26 @@
             this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // textBox1
+            // dkdlel
             // 
-            this.textBox1.Location = new System.Drawing.Point(92, 38);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(203, 21);
-            this.textBox1.TabIndex = 0;
+            this.dkdlel.Location = new System.Drawing.Point(92, 38);
+            this.dkdlel.Name = "dkdlel";
+            this.dkdlel.Size = new System.Drawing.Size(203, 21);
+            this.dkdlel.TabIndex = 0;
             // 
-            // textBox2
+            // qlalfqjsgh
             // 
-            this.textBox2.Location = new System.Drawing.Point(92, 102);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(203, 21);
-            this.textBox2.TabIndex = 1;
+            this.qlalfqjsgh.Location = new System.Drawing.Point(92, 102);
+            this.qlalfqjsgh.Name = "qlalfqjsgh";
+            this.qlalfqjsgh.Size = new System.Drawing.Size(203, 21);
+            this.qlalfqjsgh.TabIndex = 1;
             // 
-            // textBox3
+            // wjsghkqjsgh
             // 
-            this.textBox3.Location = new System.Drawing.Point(92, 166);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(203, 21);
-            this.textBox3.TabIndex = 2;
+            this.wjsghkqjsgh.Location = new System.Drawing.Point(92, 166);
+            this.wjsghkqjsgh.Name = "wjsghkqjsgh";
+            this.wjsghkqjsgh.Size = new System.Drawing.Size(203, 21);
+            this.wjsghkqjsgh.TabIndex = 2;
             // 
             // label1
             // 
@@ -94,6 +94,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "회원가입";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -103,6 +104,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "로그인";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Login
             // 
@@ -114,9 +116,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.wjsghkqjsgh);
+            this.Controls.Add(this.qlalfqjsgh);
+            this.Controls.Add(this.dkdlel);
             this.Name = "Login";
             this.Text = "Login";
             this.ResumeLayout(false);
@@ -126,9 +128,9 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox dkdlel;
+        private System.Windows.Forms.TextBox qlalfqjsgh;
+        private System.Windows.Forms.TextBox wjsghkqjsgh;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;

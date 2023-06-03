@@ -1,20 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Term
 {
     public partial class SetSeatGo : Form
     {
+        Button[,] seats = new Button[4, 6];
         public SetSeatGo()
         {
             InitializeComponent();
+
+            int count = 0;
+            foreach (Control b in this.Controls)
+            {
+                if (b is Button)
+                {
+                    if (b.Text == "O")
+                    {
+                        seats[count / 4,count%4] = (Button)b;
+                    }
+                }
+            }
         }
     }
 }

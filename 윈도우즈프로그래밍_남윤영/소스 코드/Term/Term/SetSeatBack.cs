@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace Term
 {
-    public partial class Search : Form
+    public partial class SetSeatBack : Form
     {
-        public Search()
+        public SetSeatBack()
         {
             InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ChoiceTimeGo choicetimego= new ChoiceTimeGo();
-            choicetimego.Show();
-            this.Visible = false;
         }
     }
 }

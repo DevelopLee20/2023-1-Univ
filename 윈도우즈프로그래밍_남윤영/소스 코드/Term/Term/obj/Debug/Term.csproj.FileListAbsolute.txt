@@ -12,3 +12,7 @@ C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_�
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.csproj.CoreCompileInputs.cache
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.exe
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.pdb
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.ChoiceTimeBack.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.ChoiceTimeGo.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.SetSeatGo.resources
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\윈도우즈프로그래밍_남윤영\소스 코드\Term\Term\obj\Debug\Term.SetSeatBack.resources

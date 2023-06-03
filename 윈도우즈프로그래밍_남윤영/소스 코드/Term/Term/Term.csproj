@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChoiceTimeBack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoiceTimeBack.Designer.cs">
+      <DependentUpon>ChoiceTimeBack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChoiceTimeGo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChoiceTimeGo.Designer.cs">
+      <DependentUpon>ChoiceTimeGo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +84,24 @@
     <Compile Include="Search.Designer.cs">
       <DependentUpon>Search.cs</DependentUpon>
     </Compile>
+    <Compile Include="SetSeatBack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetSeatBack.Designer.cs">
+      <DependentUpon>SetSeatBack.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetSeatGo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetSeatGo.Designer.cs">
+      <DependentUpon>SetSeatGo.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ChoiceTimeBack.resx">
+      <DependentUpon>ChoiceTimeBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChoiceTimeGo.resx">
+      <DependentUpon>ChoiceTimeGo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +122,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetSeatBack.resx">
+      <DependentUpon>SetSeatBack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetSeatGo.resx">
+      <DependentUpon>SetSeatGo.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
