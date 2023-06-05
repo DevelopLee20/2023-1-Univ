@@ -30,6 +30,8 @@ int main() {
 		if (command == 'x' || command == 'X') break;
 		switch (command) {
 		case 'i':    //(키,값)을 가지는 레코드 삽입
+			system("cls");
+			printf("(키,값)을 가지는 레코드 삽입\n");
 			fscanf(stdin, "%i %s", &record.key, &record.value);
 			if (insertRecord(&record)) {
 				printf("insert (%d, %s) : success\n", record.key, record.value);
@@ -39,6 +41,8 @@ int main() {
 			}
 			break;
 		case 'd' :     //키를 가지는 레코드 삭제
+			system("cls");
+			printf("키를 가지는 레코드 삭제\n");
 			fscanf(stdin, "%i", &record.key);
 			if (deleteRecord(record.key)) {
 				printf("Delete (%d) : success\n", record.key, record.value);
@@ -47,6 +51,8 @@ int main() {
 			}
 			break;
 		case 'r':    //키를 가지는 레코드 검색
+			system("cls");
+			printf("직접 접근\n");
 			fscanf(stdin, "%i", &record.key);
 			if (retrieveRecord(record.key, & record)) {
 				printf(
@@ -57,27 +63,43 @@ int main() {
 				printf("Retrive (%d) : fail\n", record.key);
 			}
 			break;
-		case 'a':    //모든페이지 검색 o
+		case 'a':    //모든페이지 검색 a
+			system("cls");
+			printf("모든페이지 검색\n");
 			retrieveAllPages();
 			break;
 		case 'h':    //헤더정보 보기
+			system("cls");
+			printf("헤더정보 보기\n");
 			Get_Header();
 			break;
 		case 's':    //순차검색 s
-			Sequential_Search(& record);
+			system("cls");
+			printf("순차접근\n");
+			Sequential_Search();
 			break;
 
 		case 'o':    //백업화일 가져오기 o
+			system("cls");
+			printf("백업화일 가져오기\n");
 			retrieveAllPages();
 			break;
 		case 'b':    //순차택스트화일(backup.txt)로 백업하기 b
+			system("cls");
+			printf("순차택스트화일로 백업하기\n");
 			Sequential_Backup();
 			break;
 		case 'n':    //데이터화일 초기화 n
+			system("cls");
+			printf("데이터화일 초기화\n");
+			BOOL file_not_Exist = TRUE;
+			FILE* fp, * fp_backup;
+
 			fp = fopen("data.txt", "w");
 			fclose(fp);
+			initBTree("data.txt", PAGE_SIZE, file_not_Exist);
+			printf("success\n");
 			break;
-
 		}
 	}
 	closeBTree();

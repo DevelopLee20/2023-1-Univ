@@ -179,7 +179,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Location = new System.Drawing.Point(86, 89);
-            this.dateTimePicker1.MaxDate = new System.DateTime(2023, 12, 23, 0, 0, 0, 0);
+            this.dateTimePicker1.MaxDate = new System.DateTime(2023, 6, 19, 0, 0, 0, 0);
             this.dateTimePicker1.MinDate = new System.DateTime(2023, 6, 15, 0, 0, 0, 0);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(174, 21);
@@ -201,20 +201,9 @@
             this.comboBox2.Items.AddRange(new object[] {
             "서울",
             "부산",
-            "대구",
-            "광주",
-            "대전",
-            "울산",
-            "인천",
-            "세종",
             "경기",
-            "강원",
             "충북",
             "충남",
-            "전북",
-            "전남",
-            "경북",
-            "경남",
             "제주"});
             this.comboBox2.Location = new System.Drawing.Point(165, 29);
             this.comboBox2.Name = "comboBox2";
@@ -236,20 +225,9 @@
             this.comboBox1.Items.AddRange(new object[] {
             "서울",
             "부산",
-            "대구",
-            "광주",
-            "대전",
-            "울산",
-            "인천",
-            "세종",
             "경기",
-            "강원",
             "충북",
             "충남",
-            "전북",
-            "전남",
-            "경북",
-            "경남",
             "제주"});
             this.comboBox1.Location = new System.Drawing.Point(6, 29);
             this.comboBox1.Name = "comboBox1";

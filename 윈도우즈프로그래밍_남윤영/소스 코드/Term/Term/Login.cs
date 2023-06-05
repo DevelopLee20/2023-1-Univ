@@ -23,9 +23,10 @@ namespace Term
             String id = dkdlel.Text;
             String pw = qlalfqjsgh.Text;
             String phone = wjsghkqjsgh.Text;
+            String name = textBox1.Text;
             bool exist = false;
 
-            if (id == "" || pw == "" || phone == "")
+            if (id == "" || pw == "" || phone == "" || name == "")
             {
                 MessageBox.Show("공백이 있습니다!");
             }
@@ -33,7 +34,7 @@ namespace Term
             {
                 for(int i=0; i<Form1.userIdx; i++)
                 { 
-                    if(id == Form1.users[i].id || phone == Form1.users[i].phone)
+                    if(id == Form1.users[i].id || phone == Form1.users[i].phone || Form1.users[i].name == name)
                     {
                         exist = true;
                         break;
@@ -46,7 +47,7 @@ namespace Term
                 }
                 else
                 {
-                    Form1.users[Form1.userIdx++] = new UserForm(id, pw, phone);
+                    Form1.users[Form1.userIdx++] = new UserForm(id, pw, phone, name);
                     MessageBox.Show("회원가입 되었습니다.");
 
                     try
@@ -55,7 +56,7 @@ namespace Term
                         
                         for(int i=0; i<Form1.userIdx; i++)
                         {
-                            String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone;
+                            String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone + ";" + Form1.users[i].name;
                             sw.WriteLine(temp);
                         }
                         sw.Close();
@@ -72,6 +73,7 @@ namespace Term
             String id = dkdlel.Text;
             String pw = qlalfqjsgh.Text;
             String phone = wjsghkqjsgh.Text;
+            String name = textBox1.Text;
             bool exist = false;
 
             for (int i = 0; i < Form1.userIdx; i++)
@@ -87,7 +89,7 @@ namespace Term
             {
                 Form1.loginChecker = true;
                 MessageBox.Show("로그인 되었습니다!");
-                Form1.loginInfo = new UserForm(id, pw, phone);
+                Form1.loginInfo = new UserForm(id, pw, phone, name);
                 this.Close();
             }
             else

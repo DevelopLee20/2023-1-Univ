@@ -1,15 +1,13 @@
 ﻿  BTreeMain.cpp
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(44,57): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(44,57): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 2개가 제공되었습니다.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(67,4): error C2660: 'Sequential_Search': 함수는 1개의 인수를 사용하지 않습니다.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTree.h(18,6): message : 'Sequential_Search' 선언을 참조하십시오.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(67,4): message : 인수 목록 '(BTreeRecord *)'을(를) 일치시키는 동안
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(48,57): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(48,57): message : 자리 표시자 및 해당 매개 변수에는 variadic 인수가 1개 필요하지만 2개가 제공되었습니다.
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(18,7): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(21,8): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
 C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(29,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(33,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(42,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(50,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(77,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  BTreeRetrieve.cpp
-  코드를 생성하고 있습니다...
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(35,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(46,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(56,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(98,9): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(14,13): warning C4101: 'fp_backup' :참조되지 않은 지역 변수입니다.
+C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\BTreeMain.cpp(96,16): warning C4101: 'fp_backup' :참조되지 않은 지역 변수입니다.
+  B+트리.vcxproj -> C:\Users\dldls\OneDrive\바탕 화면\2023-1-Univ\화일처리_이해각\소스 코드\BplusTree\origin\Debug\B+트리.exe
