@@ -17,6 +17,11 @@ namespace Term
         {
             InitializeComponent();
 
+            if(Form1.tempbusidx == 0)
+            {
+                MessageBox.Show("해당되는 차편이 없습니다.\n다시 검색해주세요.");
+            }
+
             for (int i = 0; i < Form1.tempbusidx; i++)
             {
                 String start = Form1.Tempbuses[i].start;
@@ -28,11 +33,29 @@ namespace Term
                 String minute = Form1.Tempbuses[i].minute;
                 String type = Form1.Tempbuses[i].type;
                 String company = Form1.Tempbuses[i].company;
+                String seats = " 잔여: " + (24 - Form1.Tempbuses[i].seatNum) + "/24";
+                String charge = "일반요금:" + Form1.Tempbuses[i].charge.ToString() + "원";
+                String distance = "거리: " + Form1.Tempbuses[i].distance.ToString();
+                String times = Form1.Tempbuses[i].times;
 
-                label2.Text = year + "-" + month + "-" + day;
+                label2.Text = year + "-" + month + "-" + day + " " + charge + " " + distance + " " + times;
 
-                String output = start + "->" + end + " " + hour + ":" + minute + " " + type + " " + company;
+                String output = start + "->" + end + " " + hour + ":" + minute + " " + type + " " + company + seats;
                 listBox1.Items.Add(output);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(listBox1.SelectedIndex != -1)
+            {
+                Form1.selectOne = Form1.Tempbuses[listBox1.SelectedIndex];
+                SetSeatGo setseatgo = new SetSeatGo();
+                setseatgo.Show();
+            }
+            else
+            {
+                MessageBox.Show("원하시는 차편을 선택해주세요.");
             }
         }
     }

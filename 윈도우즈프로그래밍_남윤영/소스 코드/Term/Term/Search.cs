@@ -67,18 +67,17 @@ namespace Term
 
                     if (one && two && three && four && five && six)
                     {
-                        Console.WriteLine("yes");
-                        Form1.Tempbuses[Form1.tempbusidx++] = new BusForm(goLocate, endLocate, year, month, day, Form1.buses[i].hour, Form1.buses[i].minute, Form1.buses[i].type, Form1.buses[i].company, Form1.buses[i].seatNum ,Form1.buses[i].seat_state);
+                        Form1.Tempbuses[Form1.tempbusidx++] = new BusForm(goLocate, endLocate, year, month, day, Form1.buses[i].hour, Form1.buses[i].minute, Form1.buses[i].type, Form1.buses[i].company, Form1.buses[i].distance, Form1.buses[i].times, Form1.buses[i].charge, Form1.buses[i].seatNum, Form1.buses[i].seat_state, Form1.tempbusidx - 1);
                     }
                 }
+
+                ChoiceTimeGo choicetimego = new ChoiceTimeGo();
+                choicetimego.Show();
             }
             else
             {
                 MessageBox.Show("공백이 있습니다!");
             }
-
-            ChoiceTimeGo choicetimego= new ChoiceTimeGo();
-            choicetimego.Show();
         }
     }
 }

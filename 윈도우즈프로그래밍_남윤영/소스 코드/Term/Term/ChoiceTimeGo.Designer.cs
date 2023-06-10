@@ -36,7 +36,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(115, 18);
+            this.label2.Location = new System.Drawing.Point(12, 18);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(91, 12);
             this.label2.TabIndex = 2;
@@ -50,6 +50,7 @@
             this.button1.TabIndex = 3;
             this.button1.Text = "매수 및 좌석선택";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // listBox1
             // 
