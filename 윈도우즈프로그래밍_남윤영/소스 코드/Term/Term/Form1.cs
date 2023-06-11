@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Term
@@ -15,12 +16,55 @@ namespace Term
         static public BusForm selectForm;
         static public BusForm[] Tempbuses = new BusForm[500];
         static public int tempbusidx = 0;
+        static public BusForm selectOne;
+        static public String people;
+        static public ChoiceForm[] seats_list;
+        static public int seatsIdx = 0;
+        static public String seat_output;
+        static public int sum;
+        static public BusForm[] reserves = new BusForm[500];
+        static public int reservesIdx = 0;
+        static public ReserveForm[] reserveList = new ReserveForm[500];
+        static public int reserveListIdx = 0;
+
         public Form1()
         {
             InitializeComponent();
 
-            StreamReader sr = new StreamReader("./UserInfo.txt");
+            StreamReader sr = new StreamReader("./ReserveInfo.txt");
             String line = sr.ReadLine();
+
+            while (line != null)
+            {
+                String start = line.Split(';')[0];
+                String end = line.Split(';')[1];
+                String hour = line.Split(';')[2];
+                String minute = line.Split(';')[3];
+                String month = line.Split(';')[4];
+                String day = line.Split(';')[5];
+                int idxx = Int32.Parse(line.Split(';')[6]);
+                String seats = line.Split(';')[7];
+                int seatIdx = Int32.Parse(line.Split(';')[8]);
+                String number = line.Split(';')[9];
+                int pay = Int32.Parse(line.Split(';')[10]);
+                String phone = line.Split(';')[11];
+                ChoiceForm[] cform = new ChoiceForm[24];
+                int cidx = 0;
+
+                for (int i = 0; i < seatIdx * 2; i += 2)
+                {
+                    int row = seats[i] - '0';
+                    int col = seats[i + 1] - '0';
+                    cform[cidx++] = new ChoiceForm(row, col);
+                }
+
+                reserveList[reserveListIdx++] = new ReserveForm(start, end, hour, minute, month, day, idxx, cform, cidx, phone, pay);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+
+            sr = new StreamReader("./UserInfo.txt");
+            line = sr.ReadLine();
 
             while (line != null)
             {
@@ -28,8 +72,10 @@ namespace Term
                 String pw = line.Split(';')[1];
                 String phone = line.Split(';')[2];
                 String name = line.Split(';')[3];
+                int discount = Int32.Parse(line.Split(';')[4]);
+                int pay = Int32.Parse(line.Split(';')[5]);
 
-                users[userIdx++] = new UserForm(id, pw, phone, name);
+                users[userIdx++] = new UserForm(id, pw, phone, name, discount, pay, userIdx - 1);
                 line = sr.ReadLine();
             }
             sr.Close();
@@ -48,26 +94,29 @@ namespace Term
                 String minute = line.Split(';')[6];
                 String type = line.Split(';')[7];
                 String company = line.Split(';')[8];
-                int[,] temp = new int[4, 6];
-                int seatNum = Int32.Parse(line.Split(';')[9]);
-                String seats = line.Split(';')[10];
+                String distance = line.Split(';')[9];
+                String times = line.Split(';')[10];
+                int charge = Int32.Parse(line.Split(';')[11]);
+                int[,] temp = new int[6, 4];
+                int seatNum = Int32.Parse(line.Split(';')[12]);
+                String seats = line.Split(';')[13];
 
-                for(int i=0; i<4; i++)
+                for(int i=0; i<6; i++)
                 {
-                    for(int j=0; j<6; j++)
+                    for(int j=0; j<4; j++)
                     {
                         temp[i,j] = 0;
                     }
                 }
 
-                for(int i=0; i<seatNum; i+=2)
+                for(int i=0; i<seatNum*2; i+=2)
                 {
                     int row = seats[i] - '0';
                     int col = seats[i+1] - '0';
                     temp[row,col] = 1;
                 }
 
-                buses[busesIdx++] = new BusForm(start, end, year, month,day, hour, minute, type, company, seatNum, temp);
+                buses[busesIdx++] = new BusForm(start, end, year, month, day, hour, minute, type, company, distance, times, charge, seatNum, temp, busesIdx-1);
                 line = sr.ReadLine();
             }
             sr.Close();
@@ -94,15 +143,50 @@ namespace Term
 
         private void button1_Click(object sender, EventArgs e) // 고속 버스 예매
         {
-            if (loginChecker)
-            {
-                Search search = new Search();
-                search.Show();
-            }
-            else
-            {
-                MessageBox.Show("로그인이 필요한 서비스입니다!");
-            }
+            Search search = new Search();
+            search.Show();
+        }
+    }
+
+    public class ReserveForm
+    {
+        public String start;
+        public String end;
+        public String hour;
+        public String minute;
+        public String month;
+        public String day;
+        public int idx;
+        public ChoiceForm[] seats; // Form1.seatsIdx 같이 있음
+        public int seatsIdx;
+        public String phone;
+        public int pay;
+
+        public ReserveForm(string start, string end, string hour, string minute, string month, string day, int idx, ChoiceForm[] seats, int seatsIdx, string phone, int pay)
+        {
+            this.start = start;
+            this.end = end;
+            this.hour = hour;
+            this.minute = minute;
+            this.month = month;
+            this.day = day;
+            this.idx = idx;
+            this.seats = seats;
+            this.seatsIdx = seatsIdx;
+            this.phone = phone;
+            this.pay = pay;
+        }
+    }
+
+    public class ChoiceForm
+    {
+        public int x;
+        public int y;
+
+        public ChoiceForm(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
         }
     }
 
@@ -112,13 +196,19 @@ namespace Term
         public String pw;
         public String phone;
         public String name;
+        public int discount;
+        public int pay;
+        public int idx;
 
-        public UserForm(String id, String pw, String phone, string name)
+        public UserForm(String id, String pw, String phone, string name, int discount, int pay, int idx)
         {
             this.id = id;
             this.pw = pw;
             this.phone = phone;
             this.name = name;
+            this.discount = discount;
+            this.pay = pay;
+            this.idx = idx;
         }
     }
 
@@ -135,8 +225,12 @@ namespace Term
         public String company;
         public int seatNum;
         public int[,] seat_state;
+        public String distance;
+        public String times;
+        public int charge;
+        public int idx;
 
-        public BusForm(string start, string end, string year, string month, string day, string hour, string minute, string type, string company, int seatNum, int[,] seat_state)
+        public BusForm(string start, string end, string year, string month, string day, string hour, string minute, string type, string company, String distance, String times, int charge, int seatNum, int[,] seat_state, int idx)
         {
             this.start = start;
             this.end = end;
@@ -147,8 +241,12 @@ namespace Term
             this.minute = minute;
             this.type = type;
             this.company = company;
+            this.distance = distance;
+            this.times = times;
+            this.charge = charge;
             this.seatNum = seatNum;
             this.seat_state = seat_state;
+            this.idx = idx;
         }
     }
 }
