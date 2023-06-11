@@ -1,2 +1,3 @@
 admin;admin;admin;admin;1;0;0
-dldlsrb;dldlsrb;01039329913;LeeInGyu;2;3000;1
+dldlsrb;dldlsrb;01039329913;LeeInGyu;3;5000;1
+dlsrb;dlsrb;01035329913;InGyu;2;800;2
