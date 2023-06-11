@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Policy;
 using System.Windows.Forms;
 
 namespace Term
@@ -23,13 +24,47 @@ namespace Term
         static public int sum;
         static public BusForm[] reserves = new BusForm[500];
         static public int reservesIdx = 0;
+        static public ReserveForm[] reserveList = new ReserveForm[500];
+        static public int reserveListIdx = 0;
 
         public Form1()
         {
             InitializeComponent();
 
-            StreamReader sr = new StreamReader("./UserInfo.txt");
+            StreamReader sr = new StreamReader("./ReserveInfo.txt");
             String line = sr.ReadLine();
+
+            while (line != null)
+            {
+                String start = line.Split(';')[0];
+                String end = line.Split(';')[1];
+                String hour = line.Split(';')[2];
+                String minute = line.Split(';')[3];
+                String month = line.Split(';')[4];
+                String day = line.Split(';')[5];
+                int idxx = Int32.Parse(line.Split(';')[6]);
+                String seats = line.Split(';')[7];
+                int seatIdx = Int32.Parse(line.Split(';')[8]);
+                String number = line.Split(';')[9];
+                int pay = Int32.Parse(line.Split(';')[10]);
+                String phone = line.Split(';')[11];
+                ChoiceForm[] cform = new ChoiceForm[24];
+                int cidx = 0;
+
+                for (int i = 0; i < seatIdx * 2; i += 2)
+                {
+                    int row = seats[i] - '0';
+                    int col = seats[i + 1] - '0';
+                    cform[cidx++] = new ChoiceForm(row, col);
+                }
+
+                reserveList[reserveListIdx++] = new ReserveForm(start, end, hour, minute, month, day, idxx, cform, cidx, phone, pay);
+                line = sr.ReadLine();
+            }
+            sr.Close();
+
+            sr = new StreamReader("./UserInfo.txt");
+            line = sr.ReadLine();
 
             while (line != null)
             {
@@ -110,6 +145,36 @@ namespace Term
         {
             Search search = new Search();
             search.Show();
+        }
+    }
+
+    public class ReserveForm
+    {
+        public String start;
+        public String end;
+        public String hour;
+        public String minute;
+        public String month;
+        public String day;
+        public int idx;
+        public ChoiceForm[] seats; // Form1.seatsIdx 같이 있음
+        public int seatsIdx;
+        public String phone;
+        public int pay;
+
+        public ReserveForm(string start, string end, string hour, string minute, string month, string day, int idx, ChoiceForm[] seats, int seatsIdx, string phone, int pay)
+        {
+            this.start = start;
+            this.end = end;
+            this.hour = hour;
+            this.minute = minute;
+            this.month = month;
+            this.day = day;
+            this.idx = idx;
+            this.seats = seats;
+            this.seatsIdx = seatsIdx;
+            this.phone = phone;
+            this.pay = pay;
         }
     }
 

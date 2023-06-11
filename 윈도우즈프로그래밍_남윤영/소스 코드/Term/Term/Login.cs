@@ -56,7 +56,7 @@ namespace Term
                         
                         for(int i=0; i<Form1.userIdx; i++)
                         {
-                            String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone + ";" + Form1.users[i].name;
+                            String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone + ";" + Form1.users[i].name + ";" + Form1.users[i].discount + ";" + Form1.users[i].pay + ";" + Form1.users[i].idx;
                             sw.WriteLine(temp);
                         }
                         sw.Close();

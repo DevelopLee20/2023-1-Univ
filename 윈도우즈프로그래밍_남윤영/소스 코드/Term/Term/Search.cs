@@ -71,12 +71,22 @@ namespace Term
                     }
                 }
 
+                this.Visible = false;
                 ChoiceTimeGo choicetimego = new ChoiceTimeGo();
                 choicetimego.Show();
             }
             else
             {
-                MessageBox.Show("공백이 있습니다!");
+                if(Form1.loginInfo.name == "admin")
+                {
+                    this.Visible = false;
+                    ChoiceTimeGo choicetimego = new ChoiceTimeGo();
+                    choicetimego.Show();
+                }
+                else
+                {
+                    MessageBox.Show("공백이 있습니다!");
+                }
             }
         }
     }

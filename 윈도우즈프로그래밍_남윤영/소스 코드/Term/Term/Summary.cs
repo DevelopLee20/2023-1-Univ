@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,9 +80,61 @@ namespace Term
             String minute = one.minute;
             String month = one.month;
             String day = one.day;
+            int idx = one.idx;
             ChoiceForm[] seats = Form1.seats_list; // Form1.seatsIdx 같이 있음
             String phone = Form1.loginInfo.phone;
             int pay = (int)(sum - (sum * discount));
+            Form1.loginInfo.discount--;
+
+            Form1.reserveList[Form1.reserveListIdx++] = new ReserveForm(start, end, hour, minute, month, day, idx, seats, Form1.seatsIdx, phone, pay);
+
+            try
+            {
+                StreamWriter sw = new StreamWriter("./ReserveInfo.txt");
+
+                for (int i = 0; i < Form1.reserveListIdx; i++)
+                {
+                    ReserveForm fom = Form1.reserveList[i];
+
+                    int lenj = Form1.seatsIdx;
+                    String output = "";
+                    for(int j=0; j<lenj; j++)
+                    {
+                        output += fom.seats[j].x + "" + fom.seats[j].y + "";
+                    }
+
+                    String temp = fom.start + ";" + fom.end + ";" + fom.hour + ";" + fom.minute + ";" + fom.month + ";" + fom.day + ";" + fom.idx + ";" + output + ";" + fom.seatsIdx + ";" + fom.phone + ";" + fom.pay + ";" + fom.phone;
+                    sw.WriteLine(temp);
+                }
+                sw.Close();
+            }
+            catch (Exception ex) { }
+
+            try
+            {
+                StreamWriter sw = new StreamWriter("./UserInfo.txt");
+
+                for (int i = 0; i < Form1.userIdx; i++)
+                {
+                    if (Form1.users[i].name == Form1.loginInfo.name)
+                    {
+                        Form1.users[i].pay += (int)(sum - (sum * discount));
+                        Form1.users[i].discount += 1;
+                        String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone + ";" + Form1.users[i].name + ";" + Form1.users[i].discount + ";" + Form1.users[i].pay + ";" + Form1.users[i].idx;
+                        sw.WriteLine(temp);
+                    }
+                    else
+                    {
+                        String temp = Form1.users[i].id + ";" + Form1.users[i].pw + ";" + Form1.users[i].phone + ";" + Form1.users[i].name + ";" + Form1.users[i].discount + ";" + Form1.users[i].pay + ";" + Form1.users[i].idx;
+                        sw.WriteLine(temp);
+                    }
+                }
+                sw.Close();
+            }
+            catch (Exception ex) { }
+
+            MessageBox.Show("예약 완료 되었습니다.");
+            this.Close();
         }
     }
 }

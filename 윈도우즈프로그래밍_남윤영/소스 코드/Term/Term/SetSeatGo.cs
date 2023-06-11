@@ -151,6 +151,7 @@ namespace Term
 
                 if (Form1.loginChecker)
                 {
+                    this.Close();
                     Summary summary = new Summary();
                     summary.Show();
                 }
